@@ -18,7 +18,7 @@ module.exports = {
         "pink-light": "#aa8bad",
         "pink-lighter": "#b595b8",
         "pink-lightest": "#c0a0c3",
-        "pink-soft": "#ffccafcf",
+        "pink-soft": "#fccafcf",
         "pink-softest": "#d9c2db",
         "white-dark": "#e6d6e7",
         "white-light": "#f2ebf3",
