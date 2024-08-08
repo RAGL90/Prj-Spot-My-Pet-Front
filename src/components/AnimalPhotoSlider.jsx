@@ -3,7 +3,7 @@ import { BASE_URL } from "@/core/config/configDev";
 import Image from "next/image";
 
 function AnimalCard({ animal }) {
-  //1. La BBDD indica foto?
+  //1. La BBDD tiene rutas de foto?
   const imageUrl =
     animal.photo.length > 0
       ? `${BASE_URL}${animal._id}/${animal.photo[0]}`
@@ -16,13 +16,13 @@ function AnimalCard({ animal }) {
       : "Imagen no encontrada";
 
   return (
-    <div className="w-full">
-      <div className="relative pt-[75%] overflow-hidden">
+    <div className="w-full p-0.5 rounded">
+      <div className="rounded relative pt-[75%] overflow-hidden shadow">
         <Image
           src={imageUrl}
           alt={imageAlt}
           layout="fill"
-          className="absolute top-0 left-0 w-full h-full object-contain"
+          className="absolute rounded top-0 left-0 w-full h-full object-contain "
         />
       </div>
     </div>
