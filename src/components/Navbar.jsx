@@ -69,12 +69,12 @@ export default function Navbar() {
             </a>
           </div>
           <div className="w-full">
-            <a
-              href="#"
-              className="block text-center text-white-bright border border-white py-2"
+            <button
+              onClick={() => setShowUserLogin(true)}
+              className="w-full block text-center text-white-bright border border-white py-2"
             >
               Usuarios
-            </a>
+            </button>
           </div>
           <div className="w-full">
             <a
