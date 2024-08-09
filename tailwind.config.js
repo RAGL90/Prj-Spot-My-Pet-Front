@@ -24,6 +24,8 @@ module.exports = {
         "white-light": "#f2ebf3",
         white: "#ffffff",
         "white-bright": "#feffff",
+        red: "#be185d",
+        greenL: "#14a34a",
       },
       fontFamily: {
         exo: ["Exo 2", "sans-serif"],

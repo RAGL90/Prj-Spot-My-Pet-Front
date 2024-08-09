@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import UserLogin from "@/auth/UserLogin";
+import ModalScreen from "./ModalScreen";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showUserLogin, setShowUserLogin] = useState(false);
 
   return (
     <nav className="bg-background h-[90px] flex justify-between items-center px-4">
@@ -24,9 +27,12 @@ export default function Navbar() {
         </div>
       </div>
       <div className="hidden md:flex space-x-4">
-        <a href="#" className="text-xl text-center text-pink-dark">
+        <button
+          onClick={() => setShowUserLogin(true)}
+          className="text-xl text-center text-pink-dark"
+        >
           Usuarios
-        </a>
+        </button>
         <a href="#" className="text-xl text-center text-pink-dark">
           Protectoras
         </a>
@@ -88,6 +94,12 @@ export default function Navbar() {
           </div>
         </div>
       )}
+      <ModalScreen
+        isOpen={showUserLogin}
+        onClose={() => setShowUserLogin(false)}
+      >
+        <UserLogin />
+      </ModalScreen>
     </nav>
   );
 }
