@@ -65,7 +65,7 @@ export default function UserLogin() {
             <input
               type="email"
               id="email"
-              className="w-full border-2 border-solid border-blue shadow"
+              className="w-full border-2 border-solid border-blue shadow text-blue-dark"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

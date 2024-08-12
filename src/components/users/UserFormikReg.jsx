@@ -147,7 +147,7 @@ export default function UserFormikReg() {
               type="text"
               name="email"
               placeholder="Correo Electrónico"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
+              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-pink-dark focus:outline-none focus:ring-1"
             />
           </div>
           <div className="m-1">
@@ -166,7 +166,7 @@ export default function UserFormikReg() {
               name="tipoNIF"
               className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
             >
-              <option value=""> Selecciona... </option>
+              <option value=""> Seleccionar... </option>
               <option value="DNI">DNI</option>
               <option value="NIE">NIE</option>
             </Field>
@@ -262,7 +262,7 @@ export default function UserFormikReg() {
               name="typeHouse"
               className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
             >
-              <option value="-"> Selecciona... </option>
+              <option value="-"> Seleccionar... </option>
               <option value="Piso">Piso</option>
               <option value="Chalet">Chalet</option>
               <option value="Casa">Casa</option>
@@ -302,9 +302,9 @@ export default function UserFormikReg() {
           <div className="flex justify-center m-3">
             <button
               type="submit"
-              className="w-1/3 text-xl bg-background rounded border border-pink-dark"
+              className="w-1/3 text-xl bg-white-bright rounded-full border border-pink-dark hover:bg-blue-dark hover:text-white shadow-xl"
             >
-              Registrarse!
+              Regístrate
             </button>
           </div>
           <div>
