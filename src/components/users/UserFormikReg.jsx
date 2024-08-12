@@ -1,6 +1,6 @@
 import { BASE_URL } from "@/core/config/configDev";
 import { Field, Form, Formik, useFormikContext } from "formik";
-import React from "react";
+import React, { useState } from "react";
 
 const provincias = [
   "Álava",
@@ -60,6 +60,7 @@ const provincias = [
   "Melilla",
 ];
 
+//Función de placeholder dinámico en función de la respuesta tipoNIF
 const DynamicPlaceholderNIF = ({ name, ...props }) => {
   const { values } = useFormikContext();
   const tipoNIF = values.tipoNIF;
@@ -75,6 +76,8 @@ const DynamicPlaceholderNIF = ({ name, ...props }) => {
 };
 
 export default function UserFormikReg() {
+  const [reply, setReply] = useState({ value: "", color: "" });
+
   const saveUser = async (values) => {
     const user = {
       ...values,
@@ -89,13 +92,27 @@ export default function UserFormikReg() {
         body: JSON.stringify(user),
       });
 
-      if (!response.ok) {
-        throw new Error("Conexión rechazada por el servidor");
-      }
       const data = await response.json();
       console.log("Respuesta del servidor: ", data);
+      if (response.ok) {
+        setReply({
+          value: "Usuario registrado correctamente",
+          color: "text-greenL",
+        });
+      } else {
+        setReply({
+          value: `Error en el registro: 
+          ${data.message}
+          ${data.error}`,
+          color: "text-red",
+        });
+      }
     } catch (error) {
       console.error("Error al enviar el formulario: ", error);
+      setReply({
+        value: `Error en el registro, la conexión ha sido rechazada por el servidor`,
+        color: "text-red",
+      });
     }
   };
 
@@ -267,9 +284,9 @@ export default function UserFormikReg() {
             </Field>
           </div>
           <div className="m-1">
-            <p>
-              (En caso de disponer jardín propio) <br></br> ¿Se encuentra
-              vallado o amurallado?
+            <p className="">
+              En caso de disponer jardín propio ¿Se encuentra vallado o
+              amurallado?
             </p>
             <Field
               as="select"
@@ -282,13 +299,16 @@ export default function UserFormikReg() {
               <option value="false">No deseo facilitarlo</option>
             </Field>
           </div>
-          <div className="flex justify-center mb-2">
+          <div className="flex justify-center m-3">
             <button
               type="submit"
               className="w-1/3 text-xl bg-background rounded border border-pink-dark"
             >
               Registrarse!
             </button>
+          </div>
+          <div>
+            <p className={`${reply.color} text-center`}>{reply.value}</p>
           </div>
         </Form>
       </Formik>

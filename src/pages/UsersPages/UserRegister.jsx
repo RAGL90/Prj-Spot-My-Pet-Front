@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import UserFormikReg from "@/components/users/UserFormikReg";
-import React from "react";
+import React, { useState } from "react";
 
 //https://formik.org/docs/api/formik
 
@@ -21,7 +21,7 @@ export default function UserRegister() {
 
         <div className="bg-pink-dark text-base text-white-bright text-justify py-1 pl-2 font-overpass flex justify-center">
           <div className="w-1/2">
-            <ul>
+            <ul className="list-disc leading-normal">
               <li>
                 Las asociaciones o protectoras, y aquellos usuarios actualmente
                 propietarios del animal puesto en adopción, se reservan el
