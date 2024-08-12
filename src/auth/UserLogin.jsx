@@ -53,8 +53,9 @@ export default function UserLogin() {
     }
     fetchLogin();
   };
+
   return (
-    <div className="flex justify-center items-center my-1">
+    <div className="flex justify-center items-center p-4">
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-blue-dark text-sm font-bold p-2">
@@ -86,8 +87,16 @@ export default function UserLogin() {
             />
           </div>
         </div>
-        <div className="bg-pink-dark my-1 text-center rounded">
+        <div className="bg-pink-dark my-1 text-center rounded my-4">
           <button type="submit">Iniciar sesión</button>
+        </div>
+        <div className="flex space-x-4">
+          <a href="/UsersPages/UserRegister" className="text-blue-dark text-sm">
+            Registrarse
+          </a>
+          <a href="/" className="p-2 text-pink-medium text-sm">
+            Olvidé la contraseña
+          </a>
         </div>
         <div>
           <p className={`${reply.color} text-center mt-4`}>{reply.value}</p>
