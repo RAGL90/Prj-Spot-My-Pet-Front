@@ -19,7 +19,7 @@ export default function UserRegister() {
           ¡Conoce nuestras normas!
         </h3>
 
-        <div className="bg-pink-dark text-base text-white-bright text-justify py-1 pl-2 font-overpass flex justify-center">
+        <div className="bg-pink-dark text-base text-white-bright text-justify py-1 pl-2 font-Comfortaa flex justify-center">
           <div className="w-1/2">
             <ul className="list-disc leading-normal">
               <li>

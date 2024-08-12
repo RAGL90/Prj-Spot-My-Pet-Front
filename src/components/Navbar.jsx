@@ -21,12 +21,12 @@ export default function Navbar() {
           />
         </div>
         <div className="ml-2 p-6">
-          <h1 className="sm:text-l md:text-2xl font-exo text-pink-medium text-center">
+          <h1 className="sm:text-l md:text-2xl font-Comfortaa text-pink-medium text-center">
             ¡Encuentra y adopta a tu futuro mejor amigo!
           </h1>
         </div>
       </div>
-      <div className="hidden md:flex space-x-4">
+      <div className="hidden md:flex space-x-4 font-Comfortaa">
         <button
           onClick={() => setShowUserLogin(true)}
           className="text-xl text-center text-pink-dark"

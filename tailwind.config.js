@@ -28,8 +28,7 @@ module.exports = {
         greenL: "#14a34a",
       },
       fontFamily: {
-        exo: ["Exo 2", "sans-serif"],
-        overpass: ["Overpass", "sans-serif"],
+        Comfortaa: ["Comfortaa", "Helvetica"],
       },
     },
   },
