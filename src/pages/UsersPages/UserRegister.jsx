@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import UserFormikReg from "@/components/users/UserFormikReg";
-import React, { useState } from "react";
+import Image from "next/image";
+import React from "react";
 
 //https://formik.org/docs/api/formik
 
@@ -55,9 +56,18 @@ export default function UserRegister() {
           </div>
         </div>
         {/*Comienzo de Registro - Nuevo Usuario con Formik */}
-        <div className="bg-blue-lightest text-blue-dark ">
-          <div className="pl-5 flex justify-center">
+        <div className="bg-pink-softest text-blue-dark flex justify-center">
+          <div className="pl-5">
             <UserFormikReg />
+          </div>
+          <div className="flex items-center justify-start pl-4">
+            <Image
+              src="/imageComponents/Registrate-2.png"
+              alt="Registrate y adopta a tus mascota"
+              width={200}
+              height={300}
+              className="w-1/2 object-contain"
+            />
           </div>
         </div>
       </div>

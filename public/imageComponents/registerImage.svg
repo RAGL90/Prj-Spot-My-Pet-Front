@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 257.49 321.85">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-2 {
+        letter-spacing: .04em;
+      }
+
+      .cls-3 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-4 {
+        letter-spacing: 0em;
+      }
+
+      .cls-5 {
+        fill: #1d1d1b;
+        font-family: ValentineCute, 'Valentine Cute';
+        font-size: 26.17px;
+      }
+    </style>
+  </defs>
+  <image width="512" height="512" transform="scale(.5)" xlink:href="play-with-pet_17392737.png"/>
+  <text class="cls-5" transform="translate(29.5 308.38)"><tspan x="0" y="0">¡</tspan><tspan class="cls-1" x="10.58" y="0">R</tspan><tspan class="cls-4" x="32.22" y="0">egist</tspan><tspan class="cls-3" x="108.26" y="0">r</tspan><tspan class="cls-2" x="125.73" y="0">a</tspan><tspan x="145.23" y="0">te!</tspan></text>
+</svg>

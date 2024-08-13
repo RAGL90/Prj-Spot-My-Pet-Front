@@ -8,7 +8,7 @@ function AnimalCard({ animal }) {
     animal.photo.length > 0
       ? `${BASE_URL}${animal._id}/${animal.photo[0]}`
       : //Si no tiene foto usaremos:
-        "/NotFound.svg";
+        "/imageComponents/ImageNotFound.svg";
 
   const imageAlt =
     animal.photo.length > 0

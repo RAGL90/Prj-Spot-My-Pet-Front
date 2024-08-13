@@ -140,164 +140,223 @@ export default function UserFormikReg() {
           saveUser(values);
         }}
       >
-        <Form className="my-3">
-          <div className="m-1">
-            <span className="w-1/2">Email: </span>
-            <Field
-              type="text"
-              name="email"
-              placeholder="Correo Electrónico"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-pink-dark focus:outline-none focus:ring-1"
-            />
+        <Form className="my-3 bg-blue-lightest rounded-xl border shadow-xl p-2 max-w-md">
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Email: </span>
+            </div>
+            <div className="w-3/4">
+              <Field
+                type="text"
+                name="email"
+                placeholder="Correo Electrónico"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              />
+            </div>
           </div>
-          <div className="m-1">
-            <span>Contraseña: </span>
-            <Field
-              type="password"
-              name="pswd"
-              placeholder="Contraseña"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            />
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Contraseña: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                type="password"
+                name="pswd"
+                placeholder="Contraseña"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              />
+            </div>
           </div>
-          <div className="m-1">
-            <span>Tipo de NIF: </span>
-            <Field
-              as="select"
-              name="tipoNIF"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            >
-              <option value=""> Seleccionar... </option>
-              <option value="DNI">DNI</option>
-              <option value="NIE">NIE</option>
-            </Field>
+
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Tipo de NIF: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px] ">
+              <Field
+                as="select"
+                name="tipoNIF"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              >
+                <option value=""> Seleccionar... </option>
+                <option value="DNI">DNI</option>
+                <option value="NIE">NIE</option>
+              </Field>
+            </div>
           </div>
-          <div className="m-1">
-            <span>NIF: </span>
-            <DynamicPlaceholderNIF
-              name="NIF"
-              type="text"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            />
+
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>NIF: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <DynamicPlaceholderNIF
+                name="NIF"
+                type="text"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              />
+            </div>
           </div>
-          <div className="m-1">
-            <span>Fecha de nacimiento: </span>
-            <Field
-              type="text"
-              name="birth"
-              placeholder="ej: 31/01/2024"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            />
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Fecha de nacimiento: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                type="text"
+                name="birth"
+                placeholder="ej: 31/01/2024"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              />
+            </div>
           </div>
-          <div className="m-1">
-            <span>Nombre: </span>
-            <Field
-              type="text"
-              name="name"
-              placeholder="Tu nombre"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            />
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Nombre: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                type="text"
+                name="name"
+                placeholder="Tu nombre"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              />
+            </div>
           </div>
-          <div className="m-1">
-            <span>Apellidos: </span>
-            <Field
-              type="text"
-              name="lastname"
-              placeholder="Tus apellidos"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            />
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Apellidos: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                type="text"
+                name="lastname"
+                placeholder="Tus apellidos"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              />
+            </div>
           </div>
-          <div className="m-1">
-            <span>Provincia: </span>
-            <Field
-              as="select"
-              name="province"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            >
-              <option value=""> Selecciona una provincia</option>
-              {provincias.map((provincia) => (
-                <option key={provincia} value={provincia}>
-                  {provincia}
-                </option>
-              ))}
-            </Field>
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Provincia: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                as="select"
+                name="province"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              >
+                <option value=""> Selecciona una provincia</option>
+                {provincias.map((provincia) => (
+                  <option key={provincia} value={provincia}>
+                    {provincia}
+                  </option>
+                ))}
+              </Field>
+            </div>
           </div>
-          <div className="m-1">
-            <span>Localidad: </span>
-            <Field
-              type="text"
-              name="locality"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            />
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Localidad: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                type="text"
+                name="locality"
+                placeholder="Tu localidad o municipio"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              />
+            </div>
           </div>
-          <div className="m-1">
-            <span>Dirección: </span>
-            <Field
-              type="text"
-              name="address"
-              placeholder="Tu dirección completa - Código postal incluido"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            />
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Dirección: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                type="text"
+                name="address"
+                placeholder="Dirección con Codigo Postal"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              />
+            </div>
           </div>
-          <div className="m-1">
-            <span>Teléfono: </span>
-            <Field
-              type="text"
-              name="phone"
-              placeholder="Ej: 654321987 (Sin prefijo)"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            />
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Teléfono: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                type="text"
+                name="phone"
+                placeholder="Ej: 654321987 (Sin prefijo)"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              />
+            </div>
           </div>
           <div className="my-3 m-1">
             <p className="text-pink-dark text-center">
               <b>
-                Las siguientes preguntas son para evaluar las condiciones dónde
+                Las siguientes preguntas son para evaluar el domicilio dónde
                 viviría el animal
               </b>
             </p>
           </div>
-          <div className="m-1">
-            <span>Tipo de domicilio: </span>
-            <Field
-              as="select"
-              name="typeHouse"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            >
-              <option value="-"> Seleccionar... </option>
-              <option value="Piso">Piso</option>
-              <option value="Chalet">Chalet</option>
-              <option value="Casa">Casa</option>
-              <option value="Otro">Otro</option>
-            </Field>
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>Tipo de domicilio: </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                as="select"
+                name="typeHouse"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              >
+                <option value="-"> Seleccionar... </option>
+                <option value="Piso">Piso</option>
+                <option value="Chalet">Chalet</option>
+                <option value="Casa">Casa</option>
+                <option value="Otro">Otro</option>
+              </Field>
+            </div>
           </div>
-          <div className="m-1">
-            <span>¿Es su propio domicilio? </span>
-            <Field
-              as="select"
-              name="ownHouse"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            >
-              <option value="-"> Seleccionar...</option>
-              <option value="Propio">Domicilio propio</option>
-              <option value="Alquiler">Alquiler</option>
-              <option value="Otro">Otra forma</option>
-              <option value="-">No deseo facilitarlo</option>
-            </Field>
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>¿Es domicilio propio? </span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                as="select"
+                name="ownHouse"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              >
+                <option value="-"> Seleccionar...</option>
+                <option value="Propio">Domicilio propio</option>
+                <option value="Alquiler">Alquiler</option>
+                <option value="Otro">Otra forma</option>
+                <option value="-">No deseo facilitarlo</option>
+              </Field>
+            </div>
           </div>
-          <div className="m-1">
-            <p className="">
-              En caso de disponer jardín propio ¿Se encuentra vallado o
-              amurallado?
-            </p>
-            <Field
-              as="select"
-              name="gardenWall"
-              className="ml-1 pl-1 w-1/2 border border-blue-dark rounded"
-            >
-              <option value="false">Seleccionar...</option>
-              <option value="true">Sí</option>
-              <option value="false">No</option>
-              <option value="false">No deseo facilitarlo</option>
-            </Field>
+          <p className="my-4 mb-0 text-center">
+            En caso de disponer jardín propio
+          </p>
+          <div className="flex justify-between items-center m-1">
+            <div className="w-1/4 min-w-[150px] text-right">
+              <span>¿Está vallado o amurallado?</span>
+            </div>
+            <div className="w-3/4 min-w-[150px]">
+              <Field
+                as="select"
+                name="gardenWall"
+                className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
+              >
+                <option value="false">Seleccionar...</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+                <option value="false">No deseo facilitarlo</option>
+              </Field>
+            </div>
           </div>
           <div className="flex justify-center m-3">
             <button

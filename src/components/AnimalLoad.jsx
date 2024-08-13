@@ -41,8 +41,9 @@ function AnimalLoad() {
           <p className="text-2xl text-white-light text-center p-1">
             {animal.name}
           </p>
+
           <p className="text-xl text-white-light text-center">
-            {animal.specie}
+            {animal.gender}
           </p>
           <AnimalCard animal={animal} />
         </div>

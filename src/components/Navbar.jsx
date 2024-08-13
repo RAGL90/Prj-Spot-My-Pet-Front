@@ -2,24 +2,32 @@ import React, { useState } from "react";
 import Image from "next/image";
 import UserLogin from "@/auth/UserLogin";
 import ModalScreen from "./ModalScreen";
+import Link from "next/link";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
 
+  //Este handle se activa cuando el usuario se loguea => Se cierra el modal
+  const handleLoginSuccess = () => {
+    setShowUserLogin(false);
+  };
+
   return (
     <nav className="bg-background h-[90px] flex justify-between items-center px-4">
       <div className="flex items-center">
-        <div className="max-h-[80px] w-[150px]">
-          <Image
-            src="/Spot My Pet logo.svg"
-            alt="Spot My Pet logo"
-            width={150}
-            height={50}
-            layour="fill"
-            objectFit="contain"
-          />
-        </div>
+        <Link href="/" passHref>
+          <div className="max-h-[80px] w-[150px]">
+            <Image
+              src="/Spot My Pet logo.svg"
+              alt="Spot My Pet logo"
+              width={150}
+              height={50}
+              layour="fill"
+              objectFit="contain"
+            />
+          </div>
+        </Link>
         <div className="ml-2 p-6">
           <h1 className="sm:text-l md:text-2xl font-Comfortaa text-pink-medium text-center">
             ¡Encuentra y adopta a tu futuro mejor amigo!
@@ -98,7 +106,8 @@ export default function Navbar() {
         isOpen={showUserLogin}
         onClose={() => setShowUserLogin(false)}
       >
-        <UserLogin />
+        {/* Le pasamos al UserLogin el cierre del modal cuando se active: */}
+        <UserLogin onLoginSuccess={handleLoginSuccess} />
       </ModalScreen>
     </nav>
   );

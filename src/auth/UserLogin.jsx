@@ -1,13 +1,12 @@
 import { BASE_URL } from "@/core/config/configDev";
 import React, { useContext, useState } from "react";
 
-export default function UserLogin() {
+export default function UserLogin({ onLoginSuccess }) {
   const [email, setEmail] = useState("");
   const [pswd, setPassword] = useState("");
   const [reply, setReply] = useState({ value: "", color: "" });
 
-  //Handler del botón de envío
-
+  //Handler del botón de login
   const handleSubmit = async (e) => {
     e.preventDefault();
     async function fetchLogin() {
@@ -33,6 +32,9 @@ export default function UserLogin() {
             color: "text-blue-dark",
           });
           console.log("Acceso autorizado", data);
+          if (onLoginSuccess) {
+            onLoginSuccess();
+          }
         } else {
           setReply({
             value: `Datos de usuario incorrecto ${data.message}`,
