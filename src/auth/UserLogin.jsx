@@ -1,10 +1,17 @@
+import React, { useState } from "react";
+//Importación de RUTAS
 import { BASE_URL } from "@/core/config/configDev";
-import React, { useContext, useState } from "react";
+//Importaciones de REDUX, solo vamos a usar -> login <- :
+import { useDispatch } from "react-redux";
+import { login } from "@/components/users/LoginActions";
 
 export default function UserLogin({ onLoginSuccess }) {
   const [email, setEmail] = useState("");
   const [pswd, setPassword] = useState("");
   const [reply, setReply] = useState({ value: "", color: "" });
+
+  //Declaraciones de REDUX:
+  const dispatch = useDispatch();
 
   //Handler del botón de login
   const handleSubmit = async (e) => {
@@ -31,8 +38,10 @@ export default function UserLogin({ onLoginSuccess }) {
             value: "Acceso autorizado",
             color: "text-blue-dark",
           });
-          console.log("Acceso autorizado", data);
+          //Disparamos acción login de REDUX
+          dispatch(login());
           if (onLoginSuccess) {
+            //Activamos la función heredada para provocar el cierre de la ventana modal
             onLoginSuccess();
           }
         } else {

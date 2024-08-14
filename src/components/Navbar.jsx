@@ -8,9 +8,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
 
-  //Este handle se activa cuando el usuario se loguea => Se cierra el modal
   const handleLoginSuccess = () => {
-    setShowUserLogin(false);
+    //Este handler es llamado cuando el usuario logue con éxito
+    setShowUserLogin(false); //Fin de la ventana modal
   };
 
   return (
@@ -36,7 +36,10 @@ export default function Navbar() {
       </div>
       <div className="hidden md:flex space-x-4 font-Comfortaa">
         <button
-          onClick={() => setShowUserLogin(true)}
+          onClick={
+            () => setShowUserLogin(true)
+            //Activamos la ventana Modal
+          }
           className="text-xl text-center text-pink-dark"
         >
           Usuarios
@@ -106,7 +109,7 @@ export default function Navbar() {
         isOpen={showUserLogin}
         onClose={() => setShowUserLogin(false)}
       >
-        {/* Le pasamos al UserLogin el cierre del modal cuando se active: */}
+        {/* Le pasamos al UserLogin la función del modal para cuando se active cerrarlo */}
         <UserLogin onLoginSuccess={handleLoginSuccess} />
       </ModalScreen>
     </nav>
