@@ -30,8 +30,6 @@ export default function UserLogin({ onLoginSuccess }) {
         const data = await response.json();
 
         if (response.ok) {
-          console.log("Se ha recogido" + data.data.token);
-
           localStorage.setItem("token", data.data.token);
           localStorage.setItem("refreshToken", data.data.refreshToken);
           setReply({

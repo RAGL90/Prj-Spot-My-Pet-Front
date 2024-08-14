@@ -1,5 +1,4 @@
 import React from "react";
-
 //Componentes Propios
 import AnimalLoad from "@/components/AnimalLoad";
 import Navbar from "@/components/Navbar";

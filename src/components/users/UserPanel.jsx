@@ -24,19 +24,19 @@ export default function UserPanel() {
   }
 
   return (
-    <div className="md:flex space-x-4 font-Comfortaa justify-between">
-      <a href="/" className="text-xl text-center text-pink-dark">
-        🐱🐶 Mis animales
-      </a>
-      <a href="/" className="text-xl text-center text-pink-dark">
-        📝 Estado de solicitudes
-      </a>
-      <a href="/" className="text-xl text-center text-pink-dark">
-        👤 Ver / Modificar perfil
-      </a>
-      <button onClick={handleLogOut} className="text-xl text-pink-dark">
-        🔓 Desconectar
-      </button>
+    <div className="flex flex-col mb-2 font-Comfortaa justify-center md:flex-row md:space-x-4">
+      <div className="w-auto w-auto bg-pink-softest text-xl text-center text-blue-dark border rounded-full p-2 shadow">
+        <a href="/">🐱🐶 Mis animales</a>
+      </div>
+      <div className="w-auto bg-pink-softest text-xl text-center text-blue-dark border rounded-full p-2 shadow">
+        <a href="/">📝 Estado de solicitudes</a>
+      </div>
+      <div className="w-auto bg-pink-softest text-xl text-center text-blue-dark border rounded-full p-2 shadow">
+        <a href="/">👤 Ver / Modificar perfil</a>
+      </div>
+      <div className="w-auto bg-pink-softest text-xl text-center text-blue-dark border rounded-full p-2 shadow">
+        <button onClick={handleLogOut}>🔓 Desconectar</button>
+      </div>
     </div>
   );
 }
