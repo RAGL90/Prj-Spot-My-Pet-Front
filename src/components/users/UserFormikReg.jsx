@@ -140,7 +140,7 @@ export default function UserFormikReg() {
           saveUser(values);
         }}
       >
-        <Form className="my-3 bg-blue-lightest rounded-xl border shadow-xl p-2 max-w-md">
+        <Form className="my-3 rounded-xl border shadow-xl p-2 max-w-md">
           <div className="flex justify-between items-center m-1">
             <div className="w-1/4 min-w-[150px] text-right">
               <span>Email: </span>

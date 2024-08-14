@@ -21,7 +21,7 @@ export default function UserRegister() {
         </h3>
 
         <div className="bg-pink-dark text-base text-white-bright text-justify py-1 pl-2 font-Comfortaa flex justify-center">
-          <div className="w-1/2">
+          <div className="w-5/6 md:w-1/2">
             <ul className="list-disc leading-normal">
               <li>
                 Las asociaciones o protectoras, y aquellos usuarios actualmente
@@ -56,18 +56,18 @@ export default function UserRegister() {
           </div>
         </div>
         {/*Comienzo de Registro - Nuevo Usuario con Formik */}
-        <div className="bg-pink-softest text-blue-dark flex justify-center">
-          <div className="pl-5">
-            <UserFormikReg />
-          </div>
-          <div className="flex items-center justify-start pl-4">
+        <div className="bg-blue-lightest text-blue-dark flex flex-col md:flex-row justify-center ">
+          <div className="flex items-center justify-center py-4 animate-pulse md:pr-4 md:justify-end md:py-0">
             <Image
-              src="/imageComponents/Registrate-2.png"
+              src="/imageComponents/registerImage.svg"
               alt="Registrate y adopta a tus mascota"
-              width={200}
-              height={300}
-              className="w-1/2 object-contain"
+              width={600}
+              height={700}
+              className="w-1/2 justify-center object-contain md:w-full"
             />
+          </div>
+          <div>
+            <UserFormikReg />
           </div>
         </div>
       </div>

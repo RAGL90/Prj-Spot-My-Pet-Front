@@ -14,8 +14,8 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-background h-[90px] flex justify-between items-center px-4">
-      <div className="flex items-center">
+    <nav className="bg-background h-[110px] flex justify-between items-center px-4">
+      <div className="flex items-center md:w-full">
         <Link href="/" passHref>
           <div className="max-h-[80px] w-[150px]">
             <Image
@@ -28,8 +28,8 @@ export default function Navbar() {
             />
           </div>
         </Link>
-        <div className="ml-2 p-6">
-          <h1 className="sm:text-l md:text-2xl font-Comfortaa text-pink-medium text-center">
+        <div className="w-full flex justify-center text-center p-5 md:width">
+          <h1 className="sm:text-l md:text-2xl font-Comfortaa text-pink-medium text-center md:w-full">
             ¡Encuentra y adopta a tu futuro mejor amigo!
           </h1>
         </div>

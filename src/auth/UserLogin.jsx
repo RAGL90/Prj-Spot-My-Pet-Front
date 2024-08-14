@@ -60,27 +60,27 @@ export default function UserLogin({ onLoginSuccess }) {
     <div className="flex justify-center items-center p-4">
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-blue-dark text-sm font-bold p-2">
-            Email:
-          </label>
+          <div className="w-1/4 text-blue-dark font-bold">
+            <label>Email:</label>
+          </div>
           <div className="border border-blue-medium rounded">
             <input
               type="email"
               id="email"
-              className="w-full border-2 border-solid border-blue shadow text-blue-dark"
+              className="w-full border-2 border-solid border-blue shadow text-blue-dark rounded-lg"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
         </div>
-        <div className="text-lg text-blue-medium p-2">
-          <label className="block text-blue-dark text-sm font-bold mb-2">
-            Contraseña:
-          </label>
-          <div className="border border-blue-medium rounded">
+        <div className="my-4">
+          <div className="w-1/4 text-blue-dark font-bold">
+            <label>Contraseña:</label>
+          </div>
+          <div className="border border-blue-medium rounded-lg">
             <input
-              className="w-full text-blue-dark shadow"
+              className="w-full text-blue-dark shadow rounded-lg"
               type="password"
               id="password"
               value={pswd}
@@ -89,16 +89,25 @@ export default function UserLogin({ onLoginSuccess }) {
             />
           </div>
         </div>
-        <div className="bg-pink-dark my-1 text-center rounded my-4">
-          <button type="submit">Iniciar sesión</button>
+        <div className="justify-center text-center my-4">
+          <button type="submit" className="w-3/4 bg-pink-dark rounded-full">
+            Iniciar sesión
+          </button>
         </div>
-        <div className="flex space-x-4">
-          <a href="/UsersPages/UserRegister" className="text-blue-dark text-sm">
-            Registrarse
-          </a>
-          <a href="/" className="p-2 text-pink-medium text-sm">
-            Olvidé la contraseña
-          </a>
+        <div className="flex flex-row justify-between space-x-4">
+          <div>
+            <a
+              href="/UsersPages/UserRegister"
+              className="text-blue-dark text-sm"
+            >
+              Registrarse
+            </a>
+          </div>
+          <div>
+            <a href="/" className="p-2 text-pink-medium text-sm">
+              Olvidé la contraseña
+            </a>
+          </div>
         </div>
         <div>
           <p className={`${reply.color} text-center mt-4`}>{reply.value}</p>
