@@ -23,7 +23,7 @@ export default function Navbar() {
               alt="Spot My Pet logo"
               width={150}
               height={50}
-              layour="fill"
+              layout="responsive"
               objectFit="contain"
             />
           </div>

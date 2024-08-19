@@ -26,7 +26,7 @@ export default function ModalScreen({ isOpen, children, onClose }) {
       >
         <button
           onClick={onClose}
-          className="absolute top-0 right-0 m-4 text-xl text-black"
+          className="absolute top-0 right-0 m-1 text-3xl text-red"
         >
           &times;
         </button>
