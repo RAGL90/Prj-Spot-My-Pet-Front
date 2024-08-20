@@ -1,15 +1,53 @@
 import React from "react";
 import AnimalPhotoSlider from "./AnimalPhotoSlider";
 import { useSelector } from "react-redux";
-import UserLogin from "@/auth/UserLogin";
+import { BASE_URL } from "@/core/config/configDev";
 
 export default function AnimalDetails({ selectedAnimal, nonResponsive }) {
   const isLoggedIn = useSelector((state) => state.login.userLog);
 
+  const handleRequest = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    console.log(token);
+    console.log(selectedAnimal._id);
+
+    async function fetchRequest() {
+      try {
+        const response = await fetch(
+          `${BASE_URL}user/request/${selectedAnimal._id}`,
+          {
+            method: "POST",
+            headers: {
+              "auth-token": token,
+              Accept: "*/*",
+            },
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            `Error en el procesado de solicitud de animal Status:${response.status} 
+            Mensaje: ${data.message}`
+          );
+        }
+
+        console.log("Hecho todo perfecto: ", data);
+      } catch (error) {
+        console.log("Error " + error.message + " : " + error.error);
+      }
+    }
+    fetchRequest();
+  };
+
   return (
     <div>
+      <div className="w-full text-center text-2xl bg-blue-dark text-white py-1 my-1">
+        <h1>{selectedAnimal?.name}</h1>
+      </div>
       <div className="text-pink-dark mb-2">
-        <h1 className="text-center text-xl">{selectedAnimal?.name}</h1>
         <AnimalPhotoSlider
           animal={selectedAnimal}
           nonResponsive={nonResponsive}
@@ -67,10 +105,10 @@ export default function AnimalDetails({ selectedAnimal, nonResponsive }) {
         </div>
       </div>
       <hr className="text-blue-dark" />
-      <div className="w-full flex justify-center text-blue-dark text-center mt-2">
+      <div className="w-full flex justify-center text-blue-dark text-center mt-2 mb-2">
         {isLoggedIn ? (
-          <div>
-            <button>Solicitar adopción</button>
+          <div className="bg-blue-dark text-white shadow-xl text-xl rounded-full px-3 py-1 mt-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-pink-darkduration-300 ">
+            <button onClick={handleRequest}>Solicitar adopción</button>
           </div>
         ) : (
           <div>

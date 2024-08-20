@@ -21,16 +21,18 @@ export default function ModalScreen({ isOpen, children, onClose }) {
     >
       {/* Creamos el div que contendra el modal, con stopPropagation para evitar que se cree un bucle de eventos*/}
       <div
-        className="bg-white p-6 rounded-lg shadow-lg relative max-w-sm w-full"
+        className="bg-white rounded-lg shadow-lg relative max-w-sm w-full"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          onClick={onClose}
-          className="absolute top-0 right-0 m-1 text-3xl text-red"
-        >
-          &times;
-        </button>
-        {children}
+        <div className="mb-2">
+          <button
+            onClick={onClose}
+            className="absolute top-0 right-0 m-0.5 text-3xl text-red"
+          >
+            &times;
+          </button>
+        </div>
+        <div className="pt-6">{children}</div>
       </div>
     </div>,
     document.body
