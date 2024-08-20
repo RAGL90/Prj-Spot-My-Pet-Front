@@ -36,6 +36,6 @@ body {
   /* Estilos específicos para react-slick */
   .slick-slide img {
     width: 100%; /* Que usen todo el ancho del slide */
-    height: auto; /* Mantener proporcion */
+    max-height: auto; /* Mantener proporcion */
   }
 }

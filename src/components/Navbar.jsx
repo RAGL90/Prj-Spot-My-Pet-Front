@@ -9,7 +9,7 @@ export default function Navbar() {
   const [showUserLogin, setShowUserLogin] = useState(false);
 
   const handleLoginSuccess = () => {
-    //Este handler es llamado cuando el usuario logue con éxito
+    //Este handler es llamado cuando el usuario quiere iniciar sesion
     setShowUserLogin(false); //Fin de la ventana modal
   };
 
