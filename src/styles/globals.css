@@ -39,3 +39,12 @@ body {
     max-height: auto; /* Mantener proporcion */
   }
 }
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}

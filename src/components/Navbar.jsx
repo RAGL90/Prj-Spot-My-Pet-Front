@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import UserLogin from "@/auth/UserLogin";
 import ModalScreen from "./ModalScreen";
@@ -7,6 +7,40 @@ import Link from "next/link";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
+
+  //Estados para modificar la frase en el Navbar
+  const [fraseActual, setFraseActual] = useState(0);
+  const [fade, setFade] = useState(true);
+
+  // Array de frases a mostrar:
+  const frases = [
+    "Tu nuevo amigo te está esperando",
+    "Cambia una vida, adopta una mascota",
+    "Únete a la aventura de adoptar",
+    "¡Encuentra y adopta a tu próximo mejor amigo!",
+  ];
+
+  // Función para cambiar entre frases de cabecera
+  useEffect(() => {
+    //Cambiamos de frases cada 10 segundos
+    const interval = setInterval(() => {
+      //Ocultamos la frase actual:
+      setFade(false);
+
+      //Pasamos a la siguiente frase, y un retraso para que emita el desvanecimiento
+      setTimeout(() => {
+        //Cambia de frase, incrementa en uno, pero sin salirse del indice del array
+        setFraseActual(
+          (prevFraseActual) => (prevFraseActual + 1) % frases.length
+        );
+        //Con la nueva frase, activamos el fade y que aparezca.
+        setFade(true);
+      }, 500); // 0,5 segundos para el efecto Fade In.
+    }, 10000); // 10 segundos para el cambio de frase
+
+    // Limpiamos el intervalo cuando el componente cambie
+    return () => clearInterval(interval);
+  }, [frases.length]); // Regenera el intervalo cuando la frase cambia
 
   const handleLoginSuccess = () => {
     //Este handler es llamado cuando el usuario quiere iniciar sesion
@@ -28,10 +62,15 @@ export default function Navbar() {
             />
           </div>
         </Link>
-        <div className="w-full flex justify-center text-center p-5 md:width">
-          <h1 className="sm:text-l md:text-2xl font-Comfortaa text-pink-medium text-center md:w-full">
-            ¡Encuentra y adopta a tu futuro mejor amigo!
-          </h1>
+        {/* El siguiente div le incluimos la transicion si hay fade le damos opacidad, si no se la quitamos para que "desaparezca" la frase */}
+        <div
+          className={`transition-opacity duration-500 ${
+            fade ? "opacity-100" : "opacity-0"
+          } w-full flex justify-center text-center p-5 md:width`}
+        >
+          <p className="sm:text-l md:text-2xl font-Comfortaa text-pink-medium text-center md:w-full">
+            {frases[fraseActual]}
+          </p>
         </div>
       </div>
       <div className="hidden md:flex md:flex-col font-Comfortaa">

@@ -29,7 +29,7 @@ export default function UserPanel() {
         <a href="/">🐱🐶 Mis animales</a>
       </div>
       <div className="w-auto bg-pink-softest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
-        <a href="/">📝 Estado de solicitudes</a>
+        <a href="/UsersPages/UserRequests">📝 Estado de solicitudes</a>
       </div>
       <div className="w-auto bg-pink-softest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
         <a href="/">👤 Ver / Modificar perfil</a>
