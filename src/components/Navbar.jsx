@@ -34,22 +34,29 @@ export default function Navbar() {
           </h1>
         </div>
       </div>
-      <div className="hidden md:flex space-x-4 font-Comfortaa">
-        <button
-          onClick={
-            () => setShowUserLogin(true)
-            //Activamos la ventana Modal
-          }
-          className="text-xl text-center text-pink-dark"
-        >
-          Usuarios
-        </button>
-        <a href="#" className="text-xl text-center text-pink-dark">
-          Protectoras
-        </a>
-        <a href="#" className="text-xl text-pink-dark flex items-center">
-          Contacto
-        </a>
+      <div className="hidden md:flex md:flex-col font-Comfortaa">
+        <hr />
+        <div className="hidden md:flex space-x-4 font-Comfortaa">
+          <button
+            onClick={
+              () => setShowUserLogin(true)
+              //Activamos la ventana Modal
+            }
+            className="text-xl text-center text-pink-dark"
+          >
+            👤Usuarios
+          </button>
+          <div className="border-r-4 border-pink-dark"></div>
+          <a href="#" className="text-xl text-center text-pink-dark">
+            🫂Protectoras
+          </a>
+        </div>
+        <hr />
+        <div className="text-center justify-center w-full mt-2">
+          <a href="#" className="text-xl text-center text-pink-dark">
+            Contacto
+          </a>
+        </div>
       </div>
       <div className="md:hidden flex items-center">
         <button onClick={() => setIsOpen(!isOpen)} className="text-pink-dark">
@@ -70,11 +77,11 @@ export default function Navbar() {
         </button>
       </div>
       {isOpen && (
-        <div className="absolute top-16 left-0 w-full bg-pink-dark flex flex-col  items-center md:hidden">
+        <div className="absolute top-16 left-0 w-full flex flex-col z-50 rounded items-center md:hidden">
           <div className="w-full">
             <a
               href="#"
-              className="block text-center text-white-bright border border-white py-2"
+              className="block text-center text-white-bright bg-pink-dark rounded-full border border-white py-2"
             >
               Inicio
             </a>
@@ -82,15 +89,15 @@ export default function Navbar() {
           <div className="w-full">
             <button
               onClick={() => setShowUserLogin(true)}
-              className="w-full block text-center text-white-bright border border-white py-2"
+              className="w-full block text-center text-white-bright bg-pink-dark rounded-full border border-white py-2"
             >
-              Usuarios
+              Usuario
             </button>
           </div>
           <div className="w-full">
             <a
               href="#"
-              className="block text-center border border-white text-white-bright py-2"
+              className="block text-center border border-white bg-pink-dark rounded-full text-white-bright py-2"
             >
               Protectoras
             </a>
@@ -98,7 +105,7 @@ export default function Navbar() {
           <div className="w-full">
             <a
               href="#"
-              className="block text-center border border-white border-b-blue-light text-white-bright py-2"
+              className="block text-center border border-white bg-pink-dark rounded-full text-white-bright py-2"
             >
               Contacto
             </a>

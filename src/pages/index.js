@@ -10,9 +10,7 @@ export default function Home() {
       <Navbar />
       <div className="flex flex-col justify-start min-h-screen  py-6">
         <UserPanel />
-        <div className="w-full my-1 bg-pink-dark">
-          <h2>Animal</h2>
-        </div>
+        <div className="w-full h-2 bg-pink-dark shadow"></div>
         <main className="w-full max-w-sm mx-auto my-4">
           {/* Botones o enlaces del menú aquí */}
         </main>
