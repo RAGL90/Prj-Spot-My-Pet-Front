@@ -72,6 +72,22 @@ export default function UserRequests() {
         return "❓ Pendiente";
     }
   }
+
+  function AnimalType(requestAnimalType, requestAnimalBreed) {
+    switch (requestAnimalType) {
+      case "Perros":
+        return "🐶 Perro";
+      case "Gatos":
+        return "🐱 Gato";
+      case "Roedores":
+        return "🐰🐹 Roedor";
+      case "Aves":
+        return "🦜 Ave";
+      default:
+        return `🐾 ${requestAnimalBreed}`;
+    }
+  }
+
   return (
     <div className="bg-background min-h-screen">
       <Navbar />
@@ -88,14 +104,19 @@ export default function UserRequests() {
                 className="flex justify-center align-center m-1"
                 key={request._id}
               >
-                <div className="w-full bg-pink-dark flex flex-row rounded-full p-2 text-white text-sm items-center md:mx-20 md:text-lg">
+                <div className="w-full bg-pink-dark flex flex-row rounded-full shadow-xl p-2 text-white text-sm items-center md:mx-20 md:text-lg">
                   <div className="w-1/6 p-1">
                     <span className="font-bold">Nombre: </span>
                     <span>{request.reqAnimalName}</span>
                   </div>
                   <div className="w-1/6 ml-1 p-1">
                     <span className="font-bold">Tipo: </span>
-                    <span>{request.reqAnimalSpecie}</span>
+                    <span>
+                      {AnimalType(
+                        request.reqAnimalSpecie,
+                        request.reqAnimalBreed
+                      )}
+                    </span>
                   </div>
                   <div className="w-1/6 ml-1 p-1">
                     <span className="font-bold">Raza: </span>
@@ -105,8 +126,8 @@ export default function UserRequests() {
                     <span className="font-bold">Cedente: </span>
                     <span>{request.transferName}</span>
                   </div>
-                  <div className="w-2/6 flex justify-end ml-3 text-center">
-                    <div className="bg-blue-dark px-2 rounded-full">
+                  <div className="w-2/6 flex justify-end ml-3 text-center h-full">
+                    <div className="bg-blue-dark px-2 rounded-full content-center">
                       <span className="font-bold">Estado de solicitud: </span>
                       <span>{ReqStatus(request.status)}</span>
                     </div>
@@ -125,7 +146,7 @@ export default function UserRequests() {
         <hr className="mt-5 border-blue-light border border-double" />
         <div className="flex flex-col mt-5">
           <div className="w-5/6 flex justify-center w-full">
-            <p className="p-2 bg-blue-lightest text-blue-dark rounded-full text-center mx-1">
+            <p className="p-2 bg-blue-lightest text-blue-dark rounded-full text-center mx-1 shadow-xl">
               Si tienes alguna duda con el estado de tu solicitud, te
               recomendamos contactar con el cedente o actual propietario del
               animal
