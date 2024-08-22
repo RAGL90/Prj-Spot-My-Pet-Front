@@ -1,10 +1,20 @@
-import reducer from "../reducers";
 import { legacy_createStore as createStore } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import rootReducer from "../reducers";
 
-const store = createStore(reducer);
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = createStore(persistedReducer);
+const persistor = persistStore(store);
 
 store.subscribe(() => {
-  console.log("Estado actualizado: " + store.getState());
+  console.log("Estado actualizado:", store.getState());
 });
 
-export default store;
+export { store, persistor };
