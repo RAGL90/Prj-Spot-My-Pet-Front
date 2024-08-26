@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
-import React from "react";
+import FetchAnimals from "@/components/users/FetchAnimals";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function UserAnimalManage() {
@@ -13,7 +14,7 @@ export default function UserAnimalManage() {
           <div className="mt-4 text-center text-blue-dark">
             {isLoggedIn ? (
               <div>
-                <p>Estás logueado</p>
+                <FetchAnimals />
               </div>
             ) : (
               <div>

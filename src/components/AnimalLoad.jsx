@@ -50,7 +50,7 @@ function AnimalLoad() {
     <div className="flex flex-row flex-1 flex-wrap justify-center items-start gap-3">
       {animals.map((animal) => (
         <div
-          className="bg-blue-dark rounded-xl w-11/12 m-1 md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"
+          className="bg-blue-dark shadow-xl rounded-xl w-11/12 m-1 md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"
           key={animal._id}
         >
           <div className="w-full flex items-center justify-between relative">

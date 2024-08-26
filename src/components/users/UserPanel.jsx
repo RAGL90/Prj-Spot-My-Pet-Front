@@ -26,7 +26,7 @@ export default function UserPanel() {
   return (
     <div className="flex flex-col mb-2 font-Comfortaa justify-center md:flex-row md:space-x-4 transition-opacity duration-300">
       <div className="w-auto bg-pink-softest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
-        <a href="/">🐱🐶 Mis animales</a>
+        <a href="/UsersPages/UserAnimalManage">🐱🐶 Mis animales</a>
       </div>
       <div className="w-auto bg-pink-softest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
         <a href="/UsersPages/UserRequests">📝 Estado de solicitudes</a>
