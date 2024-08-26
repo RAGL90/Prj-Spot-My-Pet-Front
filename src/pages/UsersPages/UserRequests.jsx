@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import Navbar from "@/components/Navbar";
 import { useSelector } from "react-redux";
+import UserPanel from "@/components/users/UserPanel";
 
 export default function UserRequests() {
   const [requests, setRequests] = useState([]);
@@ -92,6 +93,7 @@ export default function UserRequests() {
     <div className="bg-background min-h-screen">
       <Navbar />
       <div className="flex flex-col justify-start min-h-screen py-6">
+        <UserPanel />
         <div className="w-full h-2 bg-pink-dark shadow"></div>
         <div className="w-full flex flex-col gap-2 justify-center align-center">
           <h2 className="text-center text-blue-dark text-2xl mt-1">

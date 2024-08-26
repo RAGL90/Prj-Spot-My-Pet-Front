@@ -58,13 +58,15 @@ function AnimalLoad() {
               <p>{animal.name}</p>
             </div>
             <div className="w-auto justify-end text-2xl rounded-full bg-blue-medium text-center flex px-1">
-              <p>{animal.gender === "macho" ? "♂️" : "♀️"}</p>
+              <p className="shadow-xl">
+                {animal.gender === "macho" ? "♂️" : "♀️"}
+              </p>
             </div>
           </div>
           <AnimalPhotoSlider animal={animal} nonResponsive={nonResponsive} />
           <div className="w-full border-0 flex justify-center items-center mt-2">
             <button
-              className="rounded-full bg-pink-dark shadow-xl text-white-light p-2 mb-2 font-italic"
+              className="rounded-full bg-pink-dark shadow-xl text-white-light p-2 mb-2 font-italic transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-medium duration-300"
               onClick={() => handleOpenModal(animal)}
             >
               ¡Cónoceme!
