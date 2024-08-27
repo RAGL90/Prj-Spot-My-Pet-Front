@@ -21,7 +21,7 @@ export default function ModalScreen({ isOpen, children, onClose }) {
     >
       {/* Creamos el div que contendra el modal, con stopPropagation para evitar que se cree un bucle de eventos*/}
       <div
-        className="bg-white rounded-lg shadow-lg relative max-w-sm w-full"
+        className="bg-white rounded-lg shadow-lg relative max-w-sm w-full max-h-[80vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-2">
