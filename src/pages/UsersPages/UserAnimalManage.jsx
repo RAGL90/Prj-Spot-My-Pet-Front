@@ -10,7 +10,7 @@ export default function UserAnimalManage() {
   return (
     <div className="bg-background min-h-screen">
       <Navbar />
-      <div className="flex flex-col justify-start min-h-screen py-6">
+      <div className="flex flex-col justify-start min-h-screen overflow-scroll py-6">
         <UserPanel />
         <div className="w-full h-2 bg-pink-dark shadow">
           <div className="mt-4 text-center text-blue-dark">

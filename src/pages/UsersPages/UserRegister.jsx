@@ -24,9 +24,9 @@ export default function UserRegister() {
           <div className="w-5/6 md:w-1/2">
             <ul className="list-disc leading-normal">
               <li>
-                Las asociaciones o protectoras, y aquellos usuarios actualmente
-                propietarios del animal puesto en adopción, se reservan el
-                derecho de aceptar o denegar las solicitudes con total libertad.
+                Las asociaciones o protectoras, y aquellos usuarios que cedan al
+                animal, se reservan el derecho de aceptar o denegar las
+                solicitudes con total libertad.
               </li>
               <li>
                 Con el fin de evitar abusos y proporcionar más prioridad a las
