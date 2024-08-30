@@ -48,14 +48,18 @@ function AnimalPhotoSlider({ animal, nonResponsive }) {
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <div className="flex justify-center items-center my-2">
-        <div className="w-11/12 flex justify-center items-center" {...handlers}>
+        <div
+          className="w-11/12 flex justify-center overflow-hidden"
+          {...handlers}
+        >
           <Image
             src={imageUrl}
             width={500}
-            height={1000}
+            height={120}
             layout="intrinsic"
             alt={imageAlt}
-            className="rounded-lg shadow-xl"
+            className="rounded-lg shadow-xl border-pink-light border-2 rounded shadow"
+            priority={true}
           />
         </div>
       </div>

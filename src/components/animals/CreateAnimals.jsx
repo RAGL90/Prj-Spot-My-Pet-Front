@@ -3,6 +3,7 @@ import ModalScreen from "../ModalScreen";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { object, string } from "yup";
 import { BASE_URL } from "@/core/config/configDev";
+import UploadPhoto from "./UploadPhoto";
 
 export default function CreateAnimals() {
   //              ********** Declaraciones y funciones para ventana Modal ***********
@@ -437,17 +438,14 @@ export default function CreateAnimals() {
           </div>
         ) : (
           <div>
-            <div className="w-full text-2xl text-blue-dark text-center">
-              <p>¡Animal creado con éxito!</p>
+            <div className="w-full text-2xl text-blue-dark text-center pb-2">
+              <p>¡Mascota registrada con éxito! ✅ </p>
+              <p className="text-sm">
+                (Ahora añade sus fotos si las tienes a mano)
+              </p>
+              <hr />
             </div>
-            <button
-              onClick={() => {
-                handleCloseModal();
-                // Aquí podrías también llamar a un método para abrir el próximo módulo/componente para subir fotos.
-              }}
-            >
-              Continuar para añadir fotos
-            </button>
+            <UploadPhoto animalId={animalId} />
           </div>
         )}
       </ModalScreen>

@@ -5,7 +5,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "localhost", //Dónde "localhost" irá la IP o dominio real
+        // hostname: "192.168.2.2", //Dónde "localhost" irá la IP  o dominio real
+        hostname: "localhost",
       },
     ],
   },

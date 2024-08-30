@@ -1,5 +1,6 @@
 import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useState } from "react";
+import AnimalPhotoSlider from "../AnimalPhotoSlider";
 
 export default function FetchAnimals() {
   const [userAnimals, setUserAnimals] = useState([]);
@@ -7,8 +8,7 @@ export default function FetchAnimals() {
   useEffect(() => {
     async function initTokenFetchAnimal() {
       //1º Revisamos si es un navegador para poder acceder al localStorage y obtener el token
-      const storedToken =
-        typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      const storedToken = localStorage.getItem("token");
 
       //2º Si lo hay lo lanzamos al fetch
       if (storedToken) {
@@ -42,7 +42,7 @@ export default function FetchAnimals() {
         {userAnimals.length > 0 ? (
           userAnimals.map((userAnimal) => (
             <div
-              className="w-full md:w-1/3 flex flex-col justify-between bg-pink-lightest border border-blue-dark rounded m-1 p-2"
+              className="w-full md:w-1/4 flex flex-col justify-between bg-pink-lightest border border-blue-dark rounded m-1 p-2"
               key={userAnimal._id}
             >
               <div>
@@ -51,11 +51,17 @@ export default function FetchAnimals() {
                     ? "Sin adoptar aún"
                     : "Adoptado"}
                 </div>
+                <div>
+                  <AnimalPhotoSlider animal={userAnimal} />
+                </div>
                 <div className="my-2">
                   <strong>Nombre:</strong> {userAnimal.name}
                 </div>
                 <div className="my-2">
                   <strong>Especie:</strong> {userAnimal.specie}
+                </div>
+                <div className="my-2">
+                  <strong>Especie:</strong> {userAnimal.breed}
                 </div>
                 <div className="my-2 mb-2">
                   <strong>Rasgos físicos:</strong> {userAnimal.physicFeatures}

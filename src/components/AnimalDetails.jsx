@@ -9,7 +9,6 @@ export default function AnimalDetails({ selectedAnimal, nonResponsive }) {
 
   useEffect(() => {
     const birthdate = new Date(selectedAnimal.birthDate);
-    console.log(birthdate);
 
     const now = new Date();
 
@@ -25,10 +24,8 @@ export default function AnimalDetails({ selectedAnimal, nonResponsive }) {
       diffYear -= 1;
       diffMonth += 12;
     }
-    console.log("Años: " + diffYear + " y " + diffMonth);
 
     setAge({ diffYear, diffMonth });
-    console.log(age);
   }, [selectedAnimal]);
 
   const handleRequest = async (e) => {
