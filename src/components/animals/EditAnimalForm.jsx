@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { object, string } from "yup";
+import AnimalPhotoSlider from "../AnimalPhotoSlider";
+import { BASE_URL } from "@/core/config/configDev";
 
 export default function EditAnimalForm(props) {
   //Animal para el formulario y onClose para cerrar el modal.
   const { animal, onClose } = props;
-  const { isLoading, setIsLoading } = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [animalSpecie, setAnimalSpecie] = useState(animal.specie);
+  const [photos, setPhotos] = useState(animal.photo);
+  const [animalId, setAnimalId] = useState("");
+
+  useEffect(() => {
+    setAnimalId(animal._id);
+  }, []);
 
   useEffect(() => {
     setAnimalSpecie(animal.specie); // Inicializa con el valor actual de la prop `animal`
@@ -29,16 +37,24 @@ export default function EditAnimalForm(props) {
       .padStart(2, "0")}/${year}`;
   };
 
+  const makeImagePrimary = (index) => {
+    if (index !== 0) {
+      const newPhotos = [...photos];
+      const primaryPhoto = newPhotos.splice(index, 1)[0];
+      newPhotos.unshift(primaryPhoto);
+      setPhotos(newPhotos);
+      console.log("El nuevo array de fotos es: " + newPhotos);
+    }
+  };
+
   const saveAnimal = async (values) => {
     setIsLoading(true);
     const token = localStorage.getItem("token");
-    const animal = { ...values };
-    //Revisamos que esté todo:
-    console.log(animal);
+    const animal = { ...values, photo: photos, id: animalId };
 
     try {
       const response = await fetch(BASE_URL + "user/animal", {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "content-type": "application/json",
           "auth-token": token,
@@ -49,22 +65,24 @@ export default function EditAnimalForm(props) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(`Error durante la creación del animal: status: ${response.status}
+        throw new Error(`Error durante la modificación del animal: status: ${response.status}
           Mensaje: ${data.message}
           Error: ${data.error}`);
       }
 
-      console.log("Animal creado correctamente ", data);
+      console.log("Animal modificado correctamente ", data);
       //Respuesta afirmativa guardamos el useState
       setAnimalId(data.animalId);
     } catch (error) {
       console.log(error);
+      setIsSuccess(false);
     } finally {
       //Aqui entrará independientemente de que haya "Try" o haya "catch" de un error:
       setIsLoading(false);
     }
   };
 
+  //Validador de Datos en Yup para Formik:
   const validationSchemaYup = object({
     specie: string()
       .required("Indicar la especie para clasificar correctamente a la mascota")
@@ -116,8 +134,8 @@ export default function EditAnimalForm(props) {
   return (
     <div className="text-center pt-1">
       <hr className="border-2 border-pink-dark" />
-      <h1 className="text-2xl">Modificando la mascota: {animal.name}</h1>
-      <div className="flex justify-center b">
+      <h1 className="text-2xl py-2">Modificando la mascota: {animal.name}</h1>
+      <div className="bg-pink-softest flex justify-center rounded-xl p-2">
         <Formik
           initialValues={{
             specie: animal.specie,
@@ -132,6 +150,7 @@ export default function EditAnimalForm(props) {
             mainColor: animal.mainColor,
             description: animal.description,
           }}
+          enableReinitialize={true} //Nos permite que el usuario modifique otro animal directamente
           validationSchema={validationSchemaYup}
           onSubmit={(values) => {
             saveAnimal(values);
@@ -139,6 +158,12 @@ export default function EditAnimalForm(props) {
         >
           {({ setFieldValue }) => (
             <Form className="bg-pink-dark w-full max-w-lg p-5 border-2 border-blue-dark rounded-xl shadow-xl">
+              <AnimalPhotoSlider
+                animal={animal}
+                nonResponsive={true}
+                allowSetMainImage={true}
+                onSetMainImage={makeImagePrimary}
+              />
               {/* Specie */}
               <div className="flex flex-col mb-4">
                 <label htmlFor="specie" className="mb-2 text-xl">
@@ -367,14 +392,16 @@ export default function EditAnimalForm(props) {
                   className="text-white bg-red text-xs mt-1 rounded"
                 />
               </div>
+              <div className="flex flex-col"></div>
               <button
                 type="submit"
-                className="bg-blue-dark text-white px-4 py-2 rounded-full hover:bg-greenL hover:text-black mx-2"
+                className="bg-blue-medium text-white px-4 my-2 py-2 rounded-full hover:bg-blue-dark hover:text-white hover:font-bold md:mx-2"
               >
                 Aceptar Cambios
               </button>
               <button
-                className="bg-red-light hover:bg-red-dark text-white p-2 rounded-full shadow-xl "
+                type="button"
+                className="bg-red-light hover:bg-red-dark hover:font-bold text-white p-2 rounded-full shadow-xl "
                 onClick={() => onClose()}
               >
                 ❌ Cancelar Cambios

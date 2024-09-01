@@ -3,22 +3,36 @@ import { BASE_URL } from "@/core/config/configDev";
 import Image from "next/image";
 import { useSwipeable } from "react-swipeable";
 
-function AnimalPhotoSlider({ animal, nonResponsive }) {
+function AnimalPhotoSlider({
+  animal,
+  nonResponsive,
+  allowSetMainImage,
+  onSetMainImage,
+}) {
   //1. La BBDD tiene rutas de foto?
   const [imageIndex, setImageIndex] = useState(0);
   const [previousButton, setPreviousButton] = useState(false);
   const [nextButton, setNextButton] = useState(true);
+  const [primaryImageIndex, setPrimaryImageIndex] = useState(0);
 
+  //No es const, dado que vamos a ir modificando esta variable imageUrl con las diferentes fotos
   let imageUrl =
     animal.photo.length > 0
       ? `${BASE_URL}${animal._id}/${animal.photo[imageIndex]}`
       : //Si no tiene foto usaremos:
         "/imageComponents/ImageNotFound.svg";
 
+  //Proporcionamos un Alt automatizado, indicando el nombre del animal
   const imageAlt =
     animal.photo.length > 0
       ? `${animal.name} - Imagen ${imageIndex}`
       : "Imagen no encontrada";
+
+  //En caso de heredar un allowSetMainImage del Modulo de Modify, se activa el botón de hacer imagen principal:
+  const handleSetMainImage = (index) => {
+    onSetMainImage(index); // Actualizamos el array del padre Modify para ejercer los cambios
+    setPrimaryImageIndex(index); // Reflejamos cambios en la nueva imagen principal de la mascota
+  };
 
   const handleNext = () => {
     if (imageIndex < animal.photo.length - 1) {
@@ -58,7 +72,11 @@ function AnimalPhotoSlider({ animal, nonResponsive }) {
             height={120}
             layout="intrinsic"
             alt={imageAlt}
-            className="rounded-lg shadow-xl border-pink-light border-2 rounded shadow"
+            className={`rounded-lg shadow-xl border-2 ${
+              imageIndex === primaryImageIndex
+                ? "border-blue-light"
+                : "border-pink-light"
+            }`}
             priority={true}
           />
         </div>
@@ -68,7 +86,11 @@ function AnimalPhotoSlider({ animal, nonResponsive }) {
          Si llega al "0" del array se desactiva el botón
          */}
         {imageIndex > 0 && nonResponsive && (
-          <button onClick={handlePrevious} disabled={!previousButton}>
+          <button
+            onClick={handlePrevious}
+            disabled={!previousButton}
+            type="button"
+          >
             ⏪
           </button>
         )}
@@ -76,11 +98,24 @@ function AnimalPhotoSlider({ animal, nonResponsive }) {
          Si llega al máximo del array se bloquea el botón.
          */}
         {imageIndex < animal.photo.length - 1 && nonResponsive && (
-          <button onClick={handleNext} disabled={!nextButton}>
+          <button type="button" onClick={handleNext} disabled={!nextButton}>
             ⏩
           </button>
         )}
       </div>
+      {allowSetMainImage && (
+        <button
+          type="button"
+          className={`my-2 px-2 text-white rounded-full ${
+            imageIndex === primaryImageIndex ? "bg-green-500" : "bg-blue-dark"
+          }`}
+          onClick={() => handleSetMainImage(imageIndex)}
+        >
+          {imageIndex === primaryImageIndex
+            ? "Imagen Principal"
+            : "Hacer Imagen Principal"}
+        </button>
+      )}
     </div>
   );
 }

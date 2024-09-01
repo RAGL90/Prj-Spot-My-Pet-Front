@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/core/config/configDev";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AnimalPhotoSlider from "../AnimalPhotoSlider";
 import EditAnimalForm from "../animals/EditAnimalForm";
 
@@ -7,11 +7,20 @@ export default function FetchAnimals() {
   const [userAnimals, setUserAnimals] = useState([]);
   const [selectedAnimal, setSelectedAnimal] = useState(null);
   const [modifyAnimal, setModifyAnimal] = useState(false);
+  const formRef = useRef(null);
 
+  //Preparamos handler para ser llamado desde el componente hijo "EditAnimalForm"
   const handleCloseEditForm = () => {
     setModifyAnimal(false); // Esto esconde el formulario
     setSelectedAnimal(null); // Opcional, limpia el animal seleccionado si es necesario
   };
+
+  //Este useEffect es para dispositivos pequeños dónde les ayudará a situar la vista en el formulario
+  useEffect(() => {
+    if (modifyAnimal && formRef.current) {
+      formRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [modifyAnimal]);
 
   useEffect(() => {
     async function initTokenFetchAnimal() {
@@ -79,6 +88,7 @@ export default function FetchAnimals() {
               </div>
               <div className="w-full">
                 <button
+                  type="button"
                   className="mt-auto w-1/3 justify-center bg-blue-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
                   onClick={() => {
                     setSelectedAnimal(userAnimal);
@@ -96,10 +106,12 @@ export default function FetchAnimals() {
       </div>
       <div>
         {modifyAnimal ? (
-          <EditAnimalForm
-            animal={selectedAnimal}
-            onClose={handleCloseEditForm}
-          />
+          <div ref={formRef}>
+            <EditAnimalForm
+              animal={selectedAnimal}
+              onClose={handleCloseEditForm}
+            />
+          </div>
         ) : null}
       </div>
     </div>

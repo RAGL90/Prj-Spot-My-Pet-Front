@@ -48,8 +48,8 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-background h-[110px] flex justify-between items-center px-4">
-      <div className="flex items-center md:w-full">
+    <nav className="bg-background h-[125px] flex justify-between pt-2 px-4 sticky top-0 z-50 border-b-2 border-b-blue-medium">
+      <div className="flex md:w-full">
         <Link href="/" passHref>
           <div className="max-h-[80px] w-[150px]">
             <Image
@@ -58,7 +58,7 @@ export default function Navbar() {
               width={150}
               height={50}
               layout="responsive"
-              objectFit="contain"
+              objectFit="fill"
             />
           </div>
         </Link>
@@ -74,8 +74,7 @@ export default function Navbar() {
         </div>
       </div>
       <div className="hidden md:flex md:flex-col font-Comfortaa">
-        <hr />
-        <div className="hidden md:flex space-x-4 font-Comfortaa">
+        <div className="hidden md:flex md:pt-5 space-x-4 font-Comfortaa">
           <button
             onClick={
               () => setShowUserLogin(true)
@@ -88,12 +87,6 @@ export default function Navbar() {
           <div className="border-r-4 border-pink-dark"></div>
           <a href="#" className="text-xl text-center text-pink-dark">
             🫂Protectoras
-          </a>
-        </div>
-        <hr />
-        <div className="text-center justify-center w-full mt-2">
-          <a href="#" className="text-xl text-center text-pink-dark">
-            Contacto
           </a>
         </div>
       </div>
