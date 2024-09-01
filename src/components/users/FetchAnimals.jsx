@@ -1,13 +1,21 @@
 import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useState } from "react";
 import AnimalPhotoSlider from "../AnimalPhotoSlider";
+import EditAnimalForm from "../animals/EditAnimalForm";
 
 export default function FetchAnimals() {
   const [userAnimals, setUserAnimals] = useState([]);
+  const [selectedAnimal, setSelectedAnimal] = useState(null);
+  const [modifyAnimal, setModifyAnimal] = useState(false);
+
+  const handleCloseEditForm = () => {
+    setModifyAnimal(false); // Esto esconde el formulario
+    setSelectedAnimal(null); // Opcional, limpia el animal seleccionado si es necesario
+  };
 
   useEffect(() => {
     async function initTokenFetchAnimal() {
-      //1º Revisamos si es un navegador para poder acceder al localStorage y obtener el token
+      //1º Buscamos en el localStorage para obtener el token
       const storedToken = localStorage.getItem("token");
 
       //2º Si lo hay lo lanzamos al fetch
@@ -23,7 +31,7 @@ export default function FetchAnimals() {
           if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
           }
-          // 3º Creamos nuestro array con los animales localizados
+          // 3º Creamos array con los animales del usuario
           const animalsData = await response.json();
           setUserAnimals(animalsData.data);
         } catch (error) {
@@ -54,21 +62,29 @@ export default function FetchAnimals() {
                 <div>
                   <AnimalPhotoSlider animal={userAnimal} />
                 </div>
-                <div className="my-2">
-                  <strong>Nombre:</strong> {userAnimal.name}
-                </div>
-                <div className="my-2">
-                  <strong>Especie:</strong> {userAnimal.specie}
-                </div>
-                <div className="my-2">
-                  <strong>Especie:</strong> {userAnimal.breed}
-                </div>
-                <div className="my-2 mb-2">
-                  <strong>Rasgos físicos:</strong> {userAnimal.physicFeatures}
+                <div className="w-full flex flex-col justify-center">
+                  <div className="my-2">
+                    <strong>Nombre:</strong> {userAnimal.name}
+                  </div>
+                  <div className="my-2">
+                    <strong>Especie:</strong> {userAnimal.specie}
+                  </div>
+                  <div className="my-2">
+                    <strong>Raza:</strong> {userAnimal.breed}
+                  </div>
+                  <div className="my-2 mb-2">
+                    <strong>Rasgos físicos:</strong> {userAnimal.physicFeatures}
+                  </div>
                 </div>
               </div>
               <div className="w-full">
-                <button className="mt-auto w-1/3 justify-center bg-blue-dark rounded-full text-white p-2 shadow hover:bg-pink-dark">
+                <button
+                  className="mt-auto w-1/3 justify-center bg-blue-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
+                  onClick={() => {
+                    setSelectedAnimal(userAnimal);
+                    setModifyAnimal(true);
+                  }}
+                >
                   Modificar animal
                 </button>
               </div>
@@ -77,6 +93,14 @@ export default function FetchAnimals() {
         ) : (
           <p>No se encontraron animales.</p>
         )}
+      </div>
+      <div>
+        {modifyAnimal ? (
+          <EditAnimalForm
+            animal={selectedAnimal}
+            onClose={handleCloseEditForm}
+          />
+        ) : null}
       </div>
     </div>
   );
