@@ -2,11 +2,16 @@ import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useRef, useState } from "react";
 import AnimalPhotoSlider from "../AnimalPhotoSlider";
 import EditAnimalForm from "../animals/EditAnimalForm";
+import UploadPhoto from "../animals/UploadPhoto";
+import DeleteAnimal from "../animals/DeleteAnimal";
 
 export default function FetchAnimals() {
   const [userAnimals, setUserAnimals] = useState([]);
   const [selectedAnimal, setSelectedAnimal] = useState(null);
   const [modifyAnimal, setModifyAnimal] = useState(false);
+  const [uplPhoto, setUplPhoto] = useState(false);
+  const [deleteAnimal, setDeleteAnimal] = useState(false);
+
   const formRef = useRef(null);
 
   //Preparamos handler para ser llamado desde el componente hijo "EditAnimalForm"
@@ -14,6 +19,13 @@ export default function FetchAnimals() {
     setModifyAnimal(false); // Esto esconde el formulario
     setSelectedAnimal(null); // Opcional, limpia el animal seleccionado si es necesario
   };
+
+  useEffect(() => {
+    // Solo activar uplPhoto si un animal ha sido seleccionado
+    if (selectedAnimal) {
+      setUplPhoto(!uplPhoto); // Esto activará o desactivará uplPhoto basado en su estado anterior
+    }
+  }, [selectedAnimal]); // Dependencia en selectedAnimal asegura que el efecto se ejecute solo cuando selectedAnimal cambie
 
   //Este useEffect es para dispositivos pequeños dónde les ayudará a situar la vista en el formulario
   useEffect(() => {
@@ -51,6 +63,30 @@ export default function FetchAnimals() {
     }
     initTokenFetchAnimal();
   }, []);
+
+  const handleButtonClick = (userAnimal, actionType) => {
+    setSelectedAnimal(userAnimal); // Configurar el animal seleccionado para todas las acciones
+
+    switch (actionType) {
+      case "modify":
+        setModifyAnimal(true);
+        setUplPhoto(false);
+        setDeleteAnimal(false);
+        break;
+      case "upload":
+        setModifyAnimal(false);
+        setUplPhoto(true);
+        setDeleteAnimal(false);
+        break;
+      case "delete":
+        setModifyAnimal(false);
+        setUplPhoto(false);
+        setDeleteAnimal(true);
+        break;
+      default:
+        console.log("No action specified");
+    }
+  };
 
   return (
     <div className="border-2 m-2 p-5 rounded-xl">
@@ -90,13 +126,32 @@ export default function FetchAnimals() {
                 <button
                   type="button"
                   className="mt-auto w-1/3 justify-center bg-blue-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
-                  onClick={() => {
-                    setSelectedAnimal(userAnimal);
-                    setModifyAnimal(true);
-                  }}
+                  onClick={() => handleButtonClick(userAnimal, "modify")}
                 >
                   Modificar animal
                 </button>
+                <div className="flex flex-col content-center w-full justify-center my-2">
+                  <div>
+                    <button
+                      type="button"
+                      className="mt-auto w-1/3 justify-center bg-blue-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
+                      onClick={() => handleButtonClick(userAnimal, "upload")}
+                    >
+                      📷 Añadir fotos
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-col content-center w-full justify-center my-2">
+                  <div>
+                    <button
+                      type="button"
+                      className="mt-auto w-1/3 justify-center bg-red-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
+                      onClick={() => handleButtonClick(userAnimal, "delete")}
+                    >
+                      ❌ Borrar
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           ))
@@ -113,6 +168,16 @@ export default function FetchAnimals() {
             />
           </div>
         ) : null}
+      </div>
+      <div className="flex justify-center">
+        <div className="w-3/6">
+          {uplPhoto && <UploadPhoto animalId={selectedAnimal._id} />}
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <div ref={formRef} className="w-3/6">
+          {deleteAnimal && <DeleteAnimal animal={selectedAnimal} />}
+        </div>
       </div>
     </div>
   );

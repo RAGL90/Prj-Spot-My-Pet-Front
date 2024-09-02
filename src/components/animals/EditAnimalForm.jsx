@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import { object, string } from "yup";
 import AnimalPhotoSlider from "../AnimalPhotoSlider";
 import { BASE_URL } from "@/core/config/configDev";
+import UploadPhoto from "./UploadPhoto";
 
 export default function EditAnimalForm(props) {
   //Animal para el formulario y onClose para cerrar el modal.

@@ -26,15 +26,20 @@ export default function UploadPhoto(props) {
       return;
     }
 
-    //Creamos el formData construyendo el array de la lista de archivos con nombre image:
+    //Creamos el formData construyendo el array con el nombre de los archivos que se enviaran con nombre "image":
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append("image", files[i]);
     }
+    console.log("El formData está construido: ", formData);
+    console.log("El id es: ", animalId);
 
     //Ya preparado el formData, comenzamos el fetch:
     setIsUploading(true);
     const token = localStorage.getItem("token");
+    console.log("Intentando subir imagen");
+    console.log("DISPONEMOS DE TOKEN " + token);
+
     try {
       const response = await fetch(`${BASE_URL}upload/${animalId}`, {
         method: "POST",
@@ -44,9 +49,16 @@ export default function UploadPhoto(props) {
         },
         body: formData,
       });
-
+      console.log("Inicia Fetch: ", response);
       if (!response.ok) {
-        throw new Error("Error al subir imagen");
+        const errorResponse = await response.json();
+        setMessage(
+          `Error al subir las imágenes: ${
+            errorResponse.message || "Error desconocido"
+          }`
+        );
+        setColor("text-red");
+        return;
       }
 
       setMessage("¡Fotos guardadas correctamente!");
@@ -55,21 +67,22 @@ export default function UploadPhoto(props) {
     } catch (error) {
       setMessage(`Error al subir las imágenes: ${error.message}`);
       setColor("text-red");
+      return;
     } finally {
       setIsUploading(false);
     }
   };
 
   return (
-    <div className="w-full flex flex col text-pink-dark w-full justify-center content-center items-center">
-      <div className="w-5/6 justify-center">
+    <div className="w-full flex flex-col justify-center items-center my-3 border-2 border-blue-dark rounded-xl">
+      <div className="p-3 w-full">
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="file"
             name="image"
             accept="image/*"
             multiple
-            max="5"
+            className="w-full text-sm text-black file:mr-4 file:py-2 file:bg-pink-medium file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             onChange={handleFileChange}
           />
           <button
