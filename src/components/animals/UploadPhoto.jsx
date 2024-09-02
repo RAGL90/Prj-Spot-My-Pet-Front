@@ -49,7 +49,6 @@ export default function UploadPhoto(props) {
         },
         body: formData,
       });
-      console.log("Inicia Fetch: ", response);
       if (!response.ok) {
         const errorResponse = await response.json();
         setMessage(
@@ -57,12 +56,12 @@ export default function UploadPhoto(props) {
             errorResponse.message || "Error desconocido"
           }`
         );
-        setColor("text-red");
+        setColor("text-red-dark");
         return;
       }
 
       setMessage("¡Fotos guardadas correctamente!");
-      setColor("text-green");
+      setColor("greenL");
       setUploadSuccess(true);
     } catch (error) {
       setMessage(`Error al subir las imágenes: ${error.message}`);

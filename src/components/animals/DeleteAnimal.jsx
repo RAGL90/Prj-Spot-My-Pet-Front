@@ -59,8 +59,8 @@ export default function DeleteAnimal({ animal }) {
         <span>¿Estás seguro/a de querer eliminar el registro de </span>
         <span className="font-bold underline text-yellow-200">
           {animal.name}
-        </span>{" "}
-        <span> y todos sus datos en la plataforma?</span>{" "}
+        </span>
+        <span> y todos sus datos en la plataforma?</span>
       </p>
       <button
         className="w-1/12 bg-red-dark border-2 border-blue-dark rounded shadow my-2 py-1 hover:bg-black"

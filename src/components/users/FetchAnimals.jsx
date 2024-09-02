@@ -13,6 +13,8 @@ export default function FetchAnimals() {
   const [deleteAnimal, setDeleteAnimal] = useState(false);
 
   const formRef = useRef(null);
+  const photoRef = useRef(null);
+  const deleteFormRef = useRef(null);
 
   //Preparamos handler para ser llamado desde el componente hijo "EditAnimalForm"
   const handleCloseEditForm = () => {
@@ -21,11 +23,10 @@ export default function FetchAnimals() {
   };
 
   useEffect(() => {
-    // Solo activar uplPhoto si un animal ha sido seleccionado
     if (selectedAnimal) {
-      setUplPhoto(!uplPhoto); // Esto activará o desactivará uplPhoto basado en su estado anterior
+      setUplPhoto(false); // Desactiva uplPhoto cuando un animal es seleccionado, o configúralo como true si es necesario
     }
-  }, [selectedAnimal]); // Dependencia en selectedAnimal asegura que el efecto se ejecute solo cuando selectedAnimal cambie
+  }, [selectedAnimal]);
 
   //Este useEffect es para dispositivos pequeños dónde les ayudará a situar la vista en el formulario
   useEffect(() => {
@@ -33,6 +34,24 @@ export default function FetchAnimals() {
       formRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [modifyAnimal]);
+
+  useEffect(() => {
+    if (deleteAnimal && deleteFormRef.current) {
+      deleteFormRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [deleteAnimal]);
+
+  useEffect(() => {
+    if (photoRef && photoRef.current) {
+      photoRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [uplPhoto]);
 
   useEffect(() => {
     async function initTokenFetchAnimal() {
@@ -170,12 +189,12 @@ export default function FetchAnimals() {
         ) : null}
       </div>
       <div className="flex justify-center">
-        <div className="w-3/6">
+        <div className="w-3/6" ref={photoRef}>
           {uplPhoto && <UploadPhoto animalId={selectedAnimal._id} />}
         </div>
       </div>
       <div className="flex justify-center">
-        <div ref={formRef} className="w-3/6">
+        <div className="w-3/6" ref={deleteFormRef}>
           {deleteAnimal && <DeleteAnimal animal={selectedAnimal} />}
         </div>
       </div>
