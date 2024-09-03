@@ -32,7 +32,7 @@ export default function UserPanel() {
         <a href="/UsersPages/UserRequests">📝 Estado de solicitudes</a>
       </div>
       <div className="w-auto bg-pink-softest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
-        <a href="/">👤 Ver / Modificar perfil</a>
+        <a href="/UsersPages/UserProfile">👤 Ver / Modificar perfil</a>
       </div>
       <div className="w-auto bg-pink-softest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
         <button onClick={handleLogOut}>🔓 Desconectar</button>

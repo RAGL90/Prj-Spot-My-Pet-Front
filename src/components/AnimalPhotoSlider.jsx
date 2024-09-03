@@ -14,6 +14,7 @@ function AnimalPhotoSlider({
   const [previousButton, setPreviousButton] = useState(false);
   const [nextButton, setNextButton] = useState(true);
   const [primaryImageIndex, setPrimaryImageIndex] = useState(0);
+  const [photoChanged, setPhotoChanged] = useState(false);
 
   //No es const, dado que vamos a ir modificando esta variable imageUrl con las diferentes fotos
   let imageUrl =
@@ -32,6 +33,7 @@ function AnimalPhotoSlider({
   const handleSetMainImage = (index) => {
     onSetMainImage(index); // Actualizamos el array del padre Modify para ejercer los cambios
     setPrimaryImageIndex(index); // Reflejamos cambios en la nueva imagen principal de la mascota
+    setPhotoChanged(true);
   };
 
   const handleNext = () => {
@@ -106,15 +108,18 @@ function AnimalPhotoSlider({
       {allowSetMainImage && (
         <button
           type="button"
-          className={`my-2 px-2 text-white rounded-full ${
+          className={`mt-2 px-2 text-white rounded-full ${
             imageIndex === primaryImageIndex ? "bg-green-500" : "bg-blue-dark"
           }`}
           onClick={() => handleSetMainImage(imageIndex)}
         >
           {imageIndex === primaryImageIndex
             ? "Imagen Principal"
-            : "Hacer Imagen Principal"}
+            : `Hacer Imagen Principal`}
         </button>
+      )}
+      {photoChanged && (
+        <p className="mb-2 text-black italic">(Recuerda aceptar los cambios)</p>
       )}
     </div>
   );
