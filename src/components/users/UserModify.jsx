@@ -72,6 +72,7 @@ export default function UserModify(props) {
 
   const [userId, setUserId] = useState("");
 
+  //********************************AREA DE VENTANA MODAL******************************/
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -83,7 +84,9 @@ export default function UserModify(props) {
   useEffect(() => {
     setUserId(user._id);
   }, []);
+  //******************************** FIN - AREA DE VENTANA MODAL ******************************/
 
+  //Esta función modifica el placeholder en función del tipo de NIF que inserta el usuario,
   const DynamicPlaceholderNIF = ({ name, ...props }) => {
     const { values } = useFormikContext();
     const tipoNIF = values.tipoNIF;
@@ -98,6 +101,7 @@ export default function UserModify(props) {
     return <Field {...props} name={name} placeholder={placeholder} />;
   };
 
+  //Esto es para convertir los datos de fecha de UTC a Local, y viceversa (ignoramos horas, minutos etc...)
   const UTCtoLocalDate = (animalBirth) => {
     const date = new Date(animalBirth);
     const day = date.getDate();
@@ -108,13 +112,15 @@ export default function UserModify(props) {
       .padStart(2, "0")}/${year}`;
   };
 
+  //FETCH EN MODO PATH PARA USER
   const saveUser = async (values) => {
     setIsLoading(true);
     const token = localStorage.getItem("token");
     const userNewData = { ...values, id: userId };
+    console.log("FETCH INICIADO");
 
     try {
-      const response = await fetch(BASE_URL + "user/animal", {
+      const response = await fetch(BASE_URL + "user/user-panel", {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -132,16 +138,45 @@ export default function UserModify(props) {
       }
 
       console.log("Usuario modificado correctamente ", data);
+
+      setReply({ value: data.message, color: "text-greenL" });
+
       //Respuesta afirmativa guardamos el useState
       setUserId(data.userId);
+      setIsSuccess(true);
     } catch (error) {
       console.log(error);
       setIsSuccess(false);
+      setReply({ value: error.message, color: "text-red" });
     } finally {
       //Aqui entrará independientemente de que haya "Try" o haya "catch" de un error:
       setIsLoading(false);
     }
   };
+
+  //En caso de respuesta satisfactoria en el fetch:
+  useEffect(() => {
+    // Creamos un timer de 2 segundos, para que el usuario pueda leer el mensaje:
+
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        //Llamada a la función fethUser de UserProfile (padre)
+        props.refreshUserData();
+
+        //Cerramos la ventana modal
+        handleCloseModal();
+
+        //Vaciamos el mensaje
+        setReply({ value: "", color: "" });
+
+        //Dejamos isSucces a false
+        setIsSuccess(false);
+      }, 2000);
+
+      // Limpieza para evitar problemas en caso de que el componente se desmonte antes de que el temporizador termine
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess, props, handleCloseModal]);
 
   //Validador de Datos en Yup para Formik:
   const validationSchemaYup = object({
@@ -445,6 +480,7 @@ export default function UserModify(props) {
                 <div className="flex justify-center m-3">
                   <button
                     type="submit"
+                    disabled={isLoading}
                     className="w-auto px-2 text-xl bg-white-bright rounded-full border border-pink-dark hover:bg-blue-dark hover:text-white shadow-xl"
                   >
                     Actualizar perfil

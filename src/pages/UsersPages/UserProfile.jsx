@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import DeleteUser from "@/components/users/DeleteUser";
 import UserModify from "@/components/users/UserModify";
 import UserPanel from "@/components/users/UserPanel";
 import { BASE_URL } from "@/core/config/configDev";
@@ -20,46 +21,41 @@ export default function UserProfile() {
   const isLoggedIn = useSelector((state) => state.login.userLog); // Verificamos si el usuario está logueado
 
   //Queremos que haga un fetch al perfil
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    console.log(token);
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${BASE_URL}user/user-panel`, {
+        method: "GET",
+        headers: {
+          Accept: "*/*",
+          "auth-token": token,
+        },
+      });
 
-    async function fetchData() {
-      setIsLoading(true);
-
-      try {
-        const response = await fetch(`${BASE_URL}user/user-panel`, {
-          // Asegúrate de usar `await` aquí
-          method: "GET",
-          headers: {
-            Accept: "*/*",
-            "auth-token": token,
-          },
-        });
-
-        const data = await response.json(); // Ahora `response` está correctamente esperada y `data` puede ser parseado.
-        if (!response.ok) {
-          setMessage(
-            `Error al obtener datos de usuario: ${
-              data.message || "Error desconocido"
-            }`
-          );
-          setColor("text-red-dark");
-          console.log("Error recibido: ", data.message); // Mover dentro del bloque de error
-          return; // Evita más ejecución si hay un error
-        }
-        console.log("Se recibe respuesta satisfactoria");
-        setUser(data.data);
-        setIsSuccess(true);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-        setMessage(`Error al conectarse al servidor: ${error.message}`);
+      const data = await response.json();
+      if (!response.ok) {
+        setMessage(
+          `Error al obtener datos de usuario: ${
+            data.message || "Error desconocido"
+          }`
+        );
         setColor("text-red-dark");
-        setIsSuccess(false);
-      } finally {
-        setIsLoading(false);
+        return;
       }
+
+      setUser(data.data);
+      setIsSuccess(true);
+    } catch (error) {
+      setMessage(`Error al conectarse al servidor: ${error.message}`);
+      setColor("text-red-dark");
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -169,8 +165,13 @@ export default function UserProfile() {
                       {user.gardenWall === false ? "No indicado" : "Sí"}
                     </span>
                   </div>
-                  <div>
-                    <UserModify user={user} />
+                  <div className="flex flex-row space-x-2 align-center">
+                    <div>
+                      <UserModify user={user} refreshUserData={fetchData} />
+                    </div>
+                    <div>
+                      <DeleteUser user={user} />
+                    </div>
                   </div>
                 </div>
                 {/* ********************************************** */}
@@ -197,7 +198,7 @@ export default function UserProfile() {
                     </span>
                     <span className="text-m">{3 - user.animalLimit}</span>
                   </div>
-                  <div className="bg-pink-softest text-blue-dark italic rounded-full px-2">
+                  <div className="rounded-full bg-blue-dark shadow-xl text-white-light text-l p-2 mb-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-pink-softest hover:text-blue-dark duration-300">
                     <a href="/UsersPages/UserAnimalManage">Ver tus mascotas</a>
                   </div>
                 </div>
