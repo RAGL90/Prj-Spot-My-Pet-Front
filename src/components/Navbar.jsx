@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import UserLogin from "@/auth/UserLogin";
+import ShelterLogin from "@/auth/ShelterLogin";
 import ModalScreen from "./ModalScreen";
 import Link from "next/link";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
+  const [showShelterLogin, setShowShelterLogin] = useState(false);
 
   //Estados para modificar la frase en el Navbar
   const [fraseActual, setFraseActual] = useState(0);
@@ -42,6 +44,12 @@ export default function Navbar() {
     return () => clearInterval(interval);
   }, [frases.length]); // Regenera el intervalo cuando la frase cambia
 
+  //Para cerrar el modal
+  const closeModal = () => {
+    setShowUserLogin(false);
+    setShowShelterLogin(false);
+  };
+
   const handleLoginSuccess = () => {
     //Este handler es llamado cuando el usuario quiere iniciar sesion
     setShowUserLogin(false); //Fin de la ventana modal
@@ -76,18 +84,17 @@ export default function Navbar() {
       <div className="hidden md:flex md:flex-col font-Comfortaa">
         <div className="hidden md:flex md:pt-5 space-x-4 font-Comfortaa">
           <button
-            onClick={
-              () => setShowUserLogin(true)
-              //Activamos la ventana Modal
-            }
+            onClick={() => setShowUserLogin(true)}
             className="text-xl text-center text-pink-dark"
           >
             👤Usuarios
           </button>
-          <div className="border-r-4 border-pink-dark"></div>
-          <a href="#" className="text-xl text-center text-pink-dark">
+          <button
+            onClick={() => setShowShelterLogin(true)}
+            className="text-xl text-center text-pink-dark"
+          >
             🫂Protectoras
-          </a>
+          </button>
         </div>
       </div>
       <div className="md:hidden flex items-center">
@@ -127,12 +134,12 @@ export default function Navbar() {
             </button>
           </div>
           <div className="w-full">
-            <a
-              href="#"
-              className="block text-center border border-white bg-pink-dark rounded-full text-white-bright py-2"
+            <button
+              onClick={() => setShowShelterLogin(true)}
+              className="w-full block text-center text-white-bright bg-pink-dark rounded-full border border-white py-2"
             >
               Protectoras
-            </a>
+            </button>
           </div>
           <div className="w-full">
             <a
@@ -145,11 +152,13 @@ export default function Navbar() {
         </div>
       )}
       <ModalScreen
-        isOpen={showUserLogin}
-        onClose={() => setShowUserLogin(false)}
+        isOpen={showUserLogin || showShelterLogin}
+        onClose={closeModal}
       >
-        {/* Le pasamos al UserLogin la función del modal para cuando se active cerrarlo */}
-        <UserLogin onLoginSuccess={handleLoginSuccess} />
+        {showUserLogin && <UserLogin onLoginSuccess={handleLoginSuccess} />}
+        {showShelterLogin && (
+          <ShelterLogin onLoginSuccess={handleLoginSuccess} />
+        )}
       </ModalScreen>
     </nav>
   );
