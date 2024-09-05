@@ -10,6 +10,7 @@ export default function Navbar() {
   const [showUserLogin, setShowUserLogin] = useState(false);
   const [showShelterLogin, setShowShelterLogin] = useState(false);
 
+  //********************************* FRASES DE CABECERA ****************************************/
   //Estados para modificar la frase en el Navbar
   const [fraseActual, setFraseActual] = useState(0);
   const [fade, setFade] = useState(true);
@@ -44,15 +45,37 @@ export default function Navbar() {
     return () => clearInterval(interval);
   }, [frases.length]); // Regenera el intervalo cuando la frase cambia
 
-  //Para cerrar el modal
+  //********************************* CONTROL DE VENTANA MODAL LOGIN ****************************************/
+  //Boton de cerrar el modal, o clic en el exterior del modal
   const closeModal = () => {
     setShowUserLogin(false);
     setShowShelterLogin(false);
   };
 
+  //Este handler es llamado cuando el usuario tiene éxito en iniciar sesion
   const handleLoginSuccess = () => {
-    //Este handler es llamado cuando el usuario quiere iniciar sesion
-    setShowUserLogin(false); //Fin de la ventana modal
+    //Usuarios estándar: se les cerrará la ventana modal
+    setShowUserLogin(false);
+  };
+
+  // Función que maneja la apertura del modal de Usuarios
+  const openUserLogin = () => {
+    // Si el modal de protectoras está abierto, lo cerramos.
+    if (showShelterLogin) {
+      setShowShelterLogin(false);
+    }
+    // Y abrimos login de usuarios.
+    setShowUserLogin(true);
+  };
+
+  // Función que maneja la apertura del modal de Protectoras
+  const openShelterLogin = () => {
+    // Si el modal de usuarios está abierto, lo cerramos.
+    if (showUserLogin) {
+      setShowUserLogin(false);
+    }
+    // Luego abrimos el modal de protectoras.
+    setShowShelterLogin(true);
   };
 
   return (
@@ -72,11 +95,11 @@ export default function Navbar() {
         </Link>
         {/* El siguiente div le incluimos la transicion si hay fade le damos opacidad, si no se la quitamos para que "desaparezca" la frase */}
         <div
-          className={`transition-opacity duration-500 ${
+          className={`transition-opacity items-center duration-500 ${
             fade ? "opacity-100" : "opacity-0"
           } w-full flex justify-center text-center p-5 md:width`}
         >
-          <p className="sm:text-l md:text-2xl font-Comfortaa text-pink-medium text-center md:w-full">
+          <p className="text-xl md:text-4xl font-Comfortaa text-pink-medium text-center md:w-full">
             {frases[fraseActual]}
           </p>
         </div>
@@ -84,13 +107,13 @@ export default function Navbar() {
       <div className="hidden md:flex md:flex-col font-Comfortaa">
         <div className="hidden md:flex md:pt-5 space-x-4 font-Comfortaa">
           <button
-            onClick={() => setShowUserLogin(true)}
+            onClick={openUserLogin}
             className="text-xl text-center text-pink-dark"
           >
             👤Usuarios
           </button>
           <button
-            onClick={() => setShowShelterLogin(true)}
+            onClick={openShelterLogin}
             className="text-xl text-center text-pink-dark"
           >
             🫂Protectoras
@@ -127,7 +150,7 @@ export default function Navbar() {
           </div>
           <div className="w-full">
             <button
-              onClick={() => setShowUserLogin(true)}
+              onClick={openUserLogin}
               className="w-full block text-center text-white-bright bg-pink-dark rounded-full border border-white py-2"
             >
               Usuario
@@ -135,7 +158,7 @@ export default function Navbar() {
           </div>
           <div className="w-full">
             <button
-              onClick={() => setShowShelterLogin(true)}
+              onClick={openShelterLogin}
               className="w-full block text-center text-white-bright bg-pink-dark rounded-full border border-white py-2"
             >
               Protectoras

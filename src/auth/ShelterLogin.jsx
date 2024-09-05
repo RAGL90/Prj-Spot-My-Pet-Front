@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 //Importación de RUTAS
 import { BASE_URL } from "@/core/config/configDev";
+import { useRouter } from "next/router";
 //Importaciones de REDUX, solo vamos a usar -> login <- :
 import { useDispatch } from "react-redux";
 import { loginShelter } from "@/components/shelters/Redux/ShelterLoginAction";
@@ -9,6 +10,9 @@ export default function UserLogin({ onLoginSuccess }) {
   const [email, setEmail] = useState("");
   const [pswd, setPassword] = useState("");
   const [reply, setReply] = useState({ value: "", color: "" });
+
+  //Usamos router, en caso de éxito enviamos a la protectora a su panel
+  const router = useRouter();
 
   //Declaraciones de REDUX:
   const dispatch = useDispatch();
@@ -43,6 +47,7 @@ export default function UserLogin({ onLoginSuccess }) {
           if (onLoginSuccess) {
             //Activamos la función heredada para provocar el cierre de la ventana modal
             onLoginSuccess();
+            router.push("/ShelterPages/ShelterMenu");
           }
         } else {
           setReply({
@@ -66,10 +71,12 @@ export default function UserLogin({ onLoginSuccess }) {
   };
 
   return (
-    <div className="flex justify-center items-center p-4">
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <h2 className="text-center text-blue-dark">Acceso Protectoras</h2>
+    <div className="flex flex-col justify-center items-center p-4">
+      <h2 className="text-center text-blue-dark text-2xl mb-4">
+        🫂 Acceso Protectoras
+      </h2>
+      <form className="w-5/6" onSubmit={handleSubmit}>
+        <div>
           <div className="w-1/4 text-blue-dark font-bold">
             <label>Email:</label>
           </div>
@@ -100,7 +107,10 @@ export default function UserLogin({ onLoginSuccess }) {
           </div>
         </div>
         <div className="justify-center text-center my-4">
-          <button type="submit" className="w-3/4 bg-pink-dark rounded-full">
+          <button
+            type="submit"
+            className="w-3/4 bg-pink-dark rounded-full hover:bg-blue-dark"
+          >
             Iniciar sesión
           </button>
         </div>
@@ -115,7 +125,7 @@ export default function UserLogin({ onLoginSuccess }) {
           </div>
           <div>
             <a href="/" className="p-2 text-pink-medium text-sm">
-              Olvidé la contraseña
+              Olvidé la contraseña (ED)
             </a>
           </div>
         </div>

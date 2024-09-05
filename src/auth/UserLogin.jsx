@@ -64,8 +64,11 @@ export default function UserLogin({ onLoginSuccess }) {
   };
 
   return (
-    <div className="flex justify-center items-center p-4">
-      <form onSubmit={handleSubmit}>
+    <div className="flex flex-col justify-center items-center p-4">
+      <h2 className="text-center text-blue-dark text-2xl mb-4">
+        👤 Acceso Usuarios
+      </h2>
+      <form className="w-5/6" onSubmit={handleSubmit}>
         <div className="mb-4">
           <div className="w-1/4 text-blue-dark font-bold">
             <label>Email:</label>
