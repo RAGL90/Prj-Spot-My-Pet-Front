@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-export default function ModalScreen({ isOpen, children, onClose }) {
+export default function ModalScreen({ isOpen, children, onClose, background }) {
   if (!isOpen) return null;
 
   const handleOverlayClick = (e) => {
@@ -10,6 +10,10 @@ export default function ModalScreen({ isOpen, children, onClose }) {
       onClose();
     }
   };
+
+  if (!background) {
+    background = "bg-background";
+  }
 
   return ReactDOM.createPortal(
     // Creamos un overlay (una pantalla sobre la principal) con un manejador de eventos
@@ -21,7 +25,7 @@ export default function ModalScreen({ isOpen, children, onClose }) {
     >
       {/* Creamos el div que contendra el modal, con stopPropagation para evitar que se cree un bucle de eventos*/}
       <div
-        className="bg-white rounded-lg shadow-lg relative max-w-sm w-full max-h-[80vh] overflow-y-auto"
+        className={`${background} rounded-lg shadow-lg relative max-w-sm w-full max-h-[80vh] overflow-y-auto`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-2">

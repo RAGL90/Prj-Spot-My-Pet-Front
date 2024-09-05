@@ -40,9 +40,7 @@ export default function ShelterPanel() {
         <a href="/UsersPages/UserProfile">Ver / Modificar perfil</a>
       </div>
       <div className="w-auto bg-blue-lightest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
-        <div>
-          <p className="bg-white">🔓</p>
-        </div>
+        <div>🔓</div>
         <button onClick={handleLogOut}> Desconectar</button>
       </div>
     </div>

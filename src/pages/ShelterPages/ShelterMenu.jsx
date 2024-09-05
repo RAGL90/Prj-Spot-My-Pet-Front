@@ -1,10 +1,12 @@
 import Navbar from "@/components/Navbar";
+import RequestViewAction from "@/components/shelters/RequestViewAction";
 import ShelterPanel from "@/components/shelters/ShelterPanel";
+import ShelterRequest from "@/components/shelters/ShelterRequest";
 import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function ShelterMenu({}) {
+export default function ShelterMenu() {
   //1º En un UseEffect hacemos un fetch con todos los datos de la Protectora.
   //Guardar datos recibidos en un state:
   const [shelter, setShelter] = useState({});
@@ -19,6 +21,39 @@ export default function ShelterMenu({}) {
   const isShelterLoggedIn = useSelector(
     (state) => state.shelterLogin.isShelterLoggedIn
   ); // Verificamos si la protectora está logueada
+
+  const [requests, setRequests] = useState([]);
+  const [status, setStatus] = useState("");
+  const [bgColor, setBgColor] = useState("");
+
+  //Creamos una función que SERÁ USADA por el hijo ShelterRequest - de forma muestre las solicitudes filtradas:
+  const fillRequestState = (requestList, stRequest) => {
+    //Primero seteamos status para mostrar a las protectoras que tipo de solicitud se trata
+    if (!stRequest) {
+      setStatus("Todas");
+    } else {
+      switch (stRequest) {
+        case "accepted":
+          setStatus("Solicitudes Aceptadas");
+          setBgColor("bg-greenL text-white");
+          break;
+        case "pending":
+          setStatus("Solicitudes Pendientes");
+          setBgColor("bg-yellow text-white");
+          break;
+        case "refused":
+          setStatus("Solicitudes Canceladas");
+          setBgColor("bg-red-dark text-white");
+          break;
+
+        default:
+          setStatus("");
+          break;
+      }
+    }
+    //Finalmente seteamos el array de solicitudes
+    setRequests(requestList);
+  };
 
   //Queremos que haga un fetch al perfil
   const fetchData = async () => {
@@ -63,7 +98,6 @@ export default function ShelterMenu({}) {
     <div className="bg-background">
       <Navbar />
       <div className="flex flex-col justify-start min-h-screen text-blue-dark text-center text-3xl">
-        <ShelterPanel />
         {isShelterLoggedIn ? (
           <div>
             <p className={`${color} text-sm`}>{message}</p>
@@ -72,7 +106,7 @@ export default function ShelterMenu({}) {
             <div className="flex justify-center text-lg space-x-5 mt-5">
               <div>Añadir animal para adopción</div>
               <div>Ver tus animales</div>
-              <div>Ver solicitudes</div>
+              <ShelterRequest fillRequestState={fillRequestState} />
               <div>Revisar información de tu perfil</div>
             </div>
           </div>
@@ -81,6 +115,35 @@ export default function ShelterMenu({}) {
             <p className="text-5xl">ERROR 404 : Esta página no existe</p>
           </div>
         )}
+        <div>
+          <p className="text-center text-2xl text-blue-dark my-5">
+            {status}: {requests.length}
+          </p>
+          {requests.length > 0 && (
+            <div className="flex justify-center flex-wrap text-base gap-3">
+              {requests.map((request) => (
+                <div
+                  key={request._id}
+                  className={`p-3 mx-5 my-3 rounded ${bgColor} shadow-xl`}
+                >
+                  <div className="mb-2">
+                    <span className="font-bold">Mascota:</span>{" "}
+                    {request.reqAnimalName}
+                  </div>
+                  <div className="mb-2">
+                    <span className="font-bold">Raza:</span>{" "}
+                    {request.reqAnimalSpecie}
+                  </div>
+                  <div className="mb-4">
+                    <span className="font-bold">Solicitante:</span>{" "}
+                    {request.applicantName} {request.applicantLastName}
+                  </div>
+                  <RequestViewAction request={request} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

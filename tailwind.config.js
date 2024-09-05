@@ -27,6 +27,7 @@ module.exports = {
         red: "#be185d",
         "red-dark": "#c40e38",
         "red-light": "#9e4f61",
+        yellow: "#9e8824",
         greenL: "#14a34a",
       },
       fontFamily: {
