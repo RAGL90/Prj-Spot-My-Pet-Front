@@ -1,9 +1,10 @@
 import Navbar from "@/components/Navbar";
+import ShelterPanel from "@/components/shelters/ShelterPanel";
 import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function ShelterMenu() {
+export default function ShelterMenu({}) {
   //1º En un UseEffect hacemos un fetch con todos los datos de la Protectora.
   //Guardar datos recibidos en un state:
   const [shelter, setShelter] = useState({});
@@ -61,7 +62,8 @@ export default function ShelterMenu() {
   return (
     <div className="bg-background">
       <Navbar />
-      <div className="flex flex-col justify-start min-h-screen py-3 text-blue-dark text-center text-3xl">
+      <div className="flex flex-col justify-start min-h-screen text-blue-dark text-center text-3xl">
+        <ShelterPanel />
         {isShelterLoggedIn ? (
           <div>
             <p className={`${color} text-sm`}>{message}</p>

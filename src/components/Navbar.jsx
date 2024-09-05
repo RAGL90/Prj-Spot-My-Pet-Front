@@ -54,8 +54,9 @@ export default function Navbar() {
 
   //Este handler es llamado cuando el usuario tiene éxito en iniciar sesion
   const handleLoginSuccess = () => {
-    //Usuarios estándar: se les cerrará la ventana modal
+    //Cerramos ventana modal en caso de éxito de los dos:
     setShowUserLogin(false);
+    setShowShelterLogin(false);
   };
 
   // Función que maneja la apertura del modal de Usuarios
