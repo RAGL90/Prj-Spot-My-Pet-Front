@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import RequestViewAction from "@/components/shelters/RequestViewAction";
-import ShelterPanel from "@/components/shelters/ShelterPanel";
 import ShelterRequest from "@/components/shelters/ShelterRequest";
 import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useState } from "react";
@@ -30,7 +29,8 @@ export default function ShelterMenu() {
   const fillRequestState = (requestList, stRequest) => {
     //Primero seteamos status para mostrar a las protectoras que tipo de solicitud se trata
     if (!stRequest) {
-      setStatus("Todas");
+      setStatus("Todas las solicitudes");
+      setBgColor("bg-pink-dark text-white");
     } else {
       switch (stRequest) {
         case "accepted":
@@ -101,11 +101,12 @@ export default function ShelterMenu() {
         {isShelterLoggedIn ? (
           <div>
             <p className={`${color} text-sm`}>{message}</p>
-            <h1>Bienvenid@s a nuestra página {shelter.name}</h1>
+            <h1 className="pt-5">
+              Bienvenid@s a nuestra página {shelter.name}
+            </h1>
             <h3 className="mt-2 text-2xl text-pink-dark">¿Que deseas hacer?</h3>
             <div className="flex justify-center text-lg space-x-5 mt-5">
-              <div>Añadir animal para adopción</div>
-              <div>Ver tus animales</div>
+              <a href="ShelterAnimals">Añadir animal / Ver tus animales</a>
               <ShelterRequest fillRequestState={fillRequestState} />
               <div>Revisar información de tu perfil</div>
             </div>
@@ -126,6 +127,16 @@ export default function ShelterMenu() {
                   key={request._id}
                   className={`p-3 mx-5 my-3 rounded ${bgColor} shadow-xl`}
                 >
+                  <div className="mb-2 bg-white text-blue-dark px-2 rounded-xl">
+                    <span className="font-bold">Estado: </span>
+                    <span>
+                      {request.status === "accepted"
+                        ? "Aceptada ✅"
+                        : request.status === "pending"
+                        ? "Pendiente ❔"
+                        : "Rechazada ❌"}
+                    </span>
+                  </div>
                   <div className="mb-2">
                     <span className="font-bold">Mascota:</span>{" "}
                     {request.reqAnimalName}

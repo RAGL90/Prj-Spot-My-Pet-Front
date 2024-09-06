@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModalScreen from "../ModalScreen";
+import { BASE_URL } from "@/core/config/configDev";
 
 export default function RequestViewAction({ request }) {
   const [refused, setRefused] = useState(false);
   const [reason, setReason] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-
+  const [actions, setActions] = useState(false);
   //Manejo de mensajes para mostrar al usuario:
   const [reply, setReply] = useState({ value: "", color: "" }); //Mensaje del estado del fetch
 
   //              ********** Declaraciones y funciones para ventana Modal ***********
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    //Reiniciamos valores en cada recarga del modal
+    setReply({ value: "", colo: "" });
+    setReason("");
+    setIsLoading("");
+    if (request.status === "pending" || request.status === "refused") {
+      setActions(true);
+    }
+  }, [isModalOpen]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -44,11 +55,45 @@ export default function RequestViewAction({ request }) {
     setReason(e.target.value);
   };
 
-  const handleRefuseConfirm = async () => {
+  const handleChoise = async (choice) => {
     setIsLoading(true);
+
     try {
-      console.log("Se intenta rechazar con", reason);
+      const token = localStorage.getItem("token");
+      const body = JSON.stringify({
+        choice: choice,
+        description: reason,
+      });
+
+      const response = await fetch(
+        `${BASE_URL}shelter/request/${request._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Accept: "*/*",
+            "auth-token": token,
+            "Content-Type": "application/json",
+          },
+          body: body,
+        }
+      );
+      if (!response.ok) {
+        setReply({
+          value: `Error en la transmision de decisión, motivo: ${response.message}`,
+          color: "text-red",
+        });
+        return;
+      }
+      setIsSuccess(true);
+      setReply({
+        value: `Decision transmitida correctamente`,
+        color: "text-greenL",
+      });
     } catch (error) {
+      setReply({
+        value: `Error en la transmision de decisión, motivo: ${error.message}`,
+        color: "text-red",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -162,45 +207,57 @@ export default function RequestViewAction({ request }) {
             </div>
           </div>
           <div>
-            <p className="text-xl">Decidir solicitud:</p>
-          </div>
-          <div className="flex justify-center space-x-10 my-5">
-            <button className="bg-greenL text-white p-2 rounded-full shadow-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-white-light hover:text-blue-dark duration-300">
-              Aceptar Solicitud
-            </button>
-            <button
-              className="bg-red-dark text-white p-2 rounded-full shadow-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-white-light hover:text-blue-dark duration-300"
-              onClick={handleRefused}
-            >
-              Rechazar Solicitud
-            </button>
-          </div>
-          <div>
-            {refused ? (
+            {actions ? (
               <div>
-                <div className="mb-5">
-                  <p className="text-red-dark font-bold text-l px-5">
-                    ¿Deseas indicar al usuario algun motivo?
-                  </p>
-                  <div>
-                    <input
-                      type="text"
-                      value={reason}
-                      onChange={handleChangeReason}
-                      className="text-input"
-                    />
-                  </div>
+                <p className="text-xl">Decidir solicitud:</p>
+                <div className="flex justify-center space-x-10 my-5">
                   <button
-                    className="bg-red-dark text-white p-2 my-5 rounded-full shadow-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-white-light hover:text-blue-dark duration-300"
+                    className="bg-greenL text-white p-2 rounded-full shadow-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-white-light hover:text-blue-dark duration-300"
                     disabled={isLoading}
-                    onClick={handleRefuseConfirm}
+                    onClick={() => handleChoise("accepted")}
                   >
-                    Rechazar
+                    Aceptar Solicitud
                   </button>
+                  <button
+                    className="bg-red-dark text-white p-2 rounded-full shadow-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-white-light hover:text-blue-dark duration-300"
+                    onClick={handleRefused}
+                  >
+                    Rechazar Solicitud
+                  </button>
+                </div>
+                <div>
+                  {refused ? (
+                    <div>
+                      <div className="mb-5">
+                        <p className="text-red-dark font-bold text-l px-5">
+                          ¿Deseas indicar al usuario algun motivo?
+                        </p>
+                        <div>
+                          <input
+                            type="text"
+                            value={reason}
+                            onChange={handleChangeReason}
+                            className="text-input"
+                          />
+                        </div>
+                        <button
+                          className="bg-red-dark text-white p-2 my-5 rounded-full shadow-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-white-light hover:text-blue-dark duration-300"
+                          disabled={isLoading}
+                          onClick={() => handleChoise("refused")}
+                        >
+                          Rechazar
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             ) : (
-              <></>
+              <div>
+                <p className="text-xl">No se puede realizar acciones</p>
+              </div>
             )}
           </div>
           <div>
