@@ -12,6 +12,7 @@ export default function EditAnimalForm(props) {
   const [animalSpecie, setAnimalSpecie] = useState(animal.specie);
   const [photos, setPhotos] = useState(animal.photo);
   const [animalId, setAnimalId] = useState("");
+  const [reply, setReply] = useState({ value: "", color: "" });
 
   useEffect(() => {
     setAnimalId(animal._id);
@@ -20,6 +21,16 @@ export default function EditAnimalForm(props) {
   useEffect(() => {
     setAnimalSpecie(animal.specie); // Inicializa con el valor actual de la prop `animal`
   }, [animal.specie]); // Agrega una dependencia aquí para asegurarte de que se actualiza si cambia la prop
+
+  useEffect(() => {
+    //En caso de éxito cerramos la ventana modal automáticamente
+    if (isSuccess) {
+      setTimeout(() => {
+        setIsSuccess(false);
+        onClose();
+      }, "5000");
+    }
+  }, [isSuccess]);
 
   const handleChangeSpecie = (e, setFieldValue) => {
     const { value } = e.target;
@@ -53,7 +64,7 @@ export default function EditAnimalForm(props) {
     const animal = { ...values, photo: photos, id: animalId };
 
     try {
-      const response = await fetch(BASE_URL + "user/animal", {
+      const response = await fetch(BASE_URL + "shelter/animal", {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -65,19 +76,24 @@ export default function EditAnimalForm(props) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(`Error durante la modificación del animal: status: ${response.status}
-          Mensaje: ${data.message}
-          Error: ${data.error}`);
+        setReply({
+          value: `No se ha podido modificar la mascota ${data.error.message}`,
+          color: "red-light",
+        });
       }
 
       console.log("Animal modificado correctamente ", data);
+      setReply({
+        value: `Animal modificado correctamente`,
+        color: "bg-greenL text-white rounded-xl",
+      });
       //Respuesta afirmativa guardamos el useState
       setAnimalId(data.animalId);
     } catch (error) {
       console.log(error);
       setIsSuccess(false);
     } finally {
-      //Aqui entrará independientemente de que haya "Try" o haya "catch" de un error:
+      //Aqui entrará independientemente de que haya exito o error:
       setIsLoading(false);
     }
   };
@@ -90,7 +106,6 @@ export default function EditAnimalForm(props) {
         ["Perros", "Gatos", "Roedores", "Aves", "Otros"],
         "Especie no válida, seleccione una de las opciones disponibles"
       ),
-    // size: string().notRequired(),
     size:
       animalSpecie === "Perros"
         ? string().required("Para los perros es obligatorio indicar el tamaño")
@@ -150,7 +165,7 @@ export default function EditAnimalForm(props) {
             gender: animal.gender,
             mainColor: animal.mainColor,
             description: animal.description,
-            cost: animal.cost,
+            cost: animal.cost || "",
             urgent: animal.urgent,
           }}
           enableReinitialize={true} //Nos permite que el usuario modifique otro animal directamente
@@ -406,6 +421,7 @@ export default function EditAnimalForm(props) {
                   placeholder="Indicar los costes de adopción, sin simbolo"
                   className="text-blue-dark p-2 rounded"
                 />
+
                 <ErrorMessage
                   name="cost"
                   component="div"
@@ -423,9 +439,8 @@ export default function EditAnimalForm(props) {
                   name="urgent"
                   className="text-blue-dark p-2 rounded"
                 >
-                  <option value="false">Seleccionar urgencia</option>
-                  <option value="true">Sí, es urgente</option>
                   <option value="false">No</option>
+                  <option value="true">Sí, es urgente</option>
                 </Field>
                 <ErrorMessage
                   name="cost"
@@ -433,19 +448,24 @@ export default function EditAnimalForm(props) {
                   className="text-white bg-red text-xs mt-1 rounded"
                 />
               </div>
-              <button
-                type="submit"
-                className="bg-blue-medium text-white px-4 my-2 py-2 rounded-full hover:bg-blue-dark hover:text-white hover:font-bold md:mx-2"
-              >
-                Aceptar Cambios
-              </button>
-              <button
-                type="button"
-                className="bg-red-light hover:bg-red-dark hover:font-bold text-white p-2 rounded-full shadow-xl "
-                onClick={() => onClose()}
-              >
-                ❌ Cancelar Cambios
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  className="bg-blue-medium text-white px-4 my-2 py-2 rounded-full hover:bg-blue-dark hover:text-white hover:font-bold md:mx-2"
+                >
+                  Aceptar Cambios
+                </button>
+                <button
+                  type="button"
+                  className="bg-red-light hover:bg-red-dark hover:font-bold text-white p-2 rounded-full shadow-xl "
+                  onClick={() => onClose()}
+                >
+                  ❌ Cancelar Cambios
+                </button>
+              </div>
+              <div className="my-5">
+                <p className={`${reply.color}`}>{reply.value}</p>
+              </div>
             </Form>
           )}
         </Formik>

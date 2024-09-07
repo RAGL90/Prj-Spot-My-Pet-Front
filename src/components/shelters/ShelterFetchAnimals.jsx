@@ -3,7 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import AnimalPhotoSlider from "../AnimalPhotoSlider";
 import EditAnimalFormShelterEd from "../animals/EditAnimalFormShelterEd";
 import UploadPhoto from "../animals/UploadPhoto";
-import DeleteAnimal from "../animals/DeleteAnimal";
+import ShelterDeleteAnimal from "@/components/animals/ShelterDeleteAnimal";
+import ModalScreen from "../ModalScreen";
+import ShelterCreateAnimals from "./ShelterCreateAnimals";
 
 export default function FetchAnimals() {
   const [shelterAnimals, setShelterAnimals] = useState([]);
@@ -11,47 +13,27 @@ export default function FetchAnimals() {
   const [modifyAnimal, setModifyAnimal] = useState(false);
   const [uplPhoto, setUplPhoto] = useState(false);
   const [deleteAnimal, setDeleteAnimal] = useState(false);
+  const [createAnimal, setCreateAnimal] = useState(false);
 
-  const formRef = useRef(null);
-  const photoRef = useRef(null);
-  const deleteFormRef = useRef(null);
+  //              ********** Declaraciones y funciones para ventana Modal ***********
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    console.log("Invocación al cierre de modal");
+    setIsModalOpen(false);
+    setModifyAnimal(false); // Esto esconde el formulario
+    setSelectedAnimal(null); // Opcional, limpia el animal seleccionado si es necesario
+  };
+  //                **********                  Fin declaraciones ventana Modal         **********
 
   //Preparamos handler para ser llamado desde el componente hijo "EditAnimalForm"
   const handleCloseEditForm = () => {
     setModifyAnimal(false); // Esto esconde el formulario
     setSelectedAnimal(null); // Opcional, limpia el animal seleccionado si es necesario
   };
-
-  useEffect(() => {
-    if (selectedAnimal) {
-      setUplPhoto(false); // Desactiva uplPhoto cuando un animal es seleccionado, o configúralo como true si es necesario
-    }
-  }, [selectedAnimal]);
-
-  //Este useEffect es para dispositivos pequeños dónde les ayudará a situar la vista en el formulario
-  useEffect(() => {
-    if (modifyAnimal && formRef.current) {
-      formRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [modifyAnimal]);
-
-  useEffect(() => {
-    if (deleteAnimal && deleteFormRef.current) {
-      deleteFormRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }, [deleteAnimal]);
-
-  useEffect(() => {
-    if (photoRef && photoRef.current) {
-      photoRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }, [uplPhoto]);
 
   useEffect(() => {
     async function initTokenFetchAnimal() {
@@ -86,44 +68,73 @@ export default function FetchAnimals() {
   }, []);
 
   const handleButtonClick = (shelterAnimals, actionType) => {
-    setSelectedAnimal(shelterAnimals); // Configurar el animal seleccionado para todas las acciones
+    // Configurar el animal seleccionado para transmitirlo a su correspondiente acción
+    setSelectedAnimal(shelterAnimals);
+    // Abre el modal en cualquier acción
+    handleOpenModal();
 
     switch (actionType) {
       case "modify":
         setModifyAnimal(true);
         setUplPhoto(false);
         setDeleteAnimal(false);
+        setCreateAnimal(false);
         break;
       case "upload":
         setModifyAnimal(false);
         setUplPhoto(true);
         setDeleteAnimal(false);
+        setCreateAnimal(false);
         break;
       case "delete":
         setModifyAnimal(false);
         setUplPhoto(false);
         setDeleteAnimal(true);
+        setCreateAnimal(false);
+        break;
+      case "create":
+        setModifyAnimal(false);
+        setUplPhoto(false);
+        setDeleteAnimal(false);
+        setCreateAnimal(true);
         break;
       default:
         console.log("Sin accion especificada");
+        handleCloseModal(); // Cierra el modal si no hay acción
     }
   };
 
   return (
     <div className="border-2 m-2 p-5 rounded-xl">
-      <p className="text-pink-dark text-2xl mb-2">Tus animales subidos: </p>
+      <div className="flex justify-center">
+        <div className="w-full md:w-2/6 text-xl mb-5">
+          <button
+            className="bg-blue-dark text-white p-5 rounded-full hover:bg-blue-lightest hover:text-blue-dark"
+            onClick={() => handleButtonClick("", "create")}
+          >
+            🐾 Registrar nueva mascota 🐾
+          </button>
+        </div>
+      </div>
+      <p className="bg-pink-dark py-2 text-white text-2xl mb-2 rounded-xl shadow">
+        Vuestros animales:
+      </p>
       <div className="w-full flex flex-wrap justify-around text-center text-base">
         {shelterAnimals.length > 0 ? (
           shelterAnimals.map((shelterAnimal) => (
             <div
-              className="w-full md:w-1/4 flex flex-col justify-between bg-pink-lightest border border-blue-dark rounded m-1 p-2"
+              className="w-full md:w-1/4 flex flex-col justify-between bg-pink-lightest border border-blue-dark rounded m-1 p-2 my-5"
               key={shelterAnimal._id}
             >
               <div>
                 <div className="bg-pink-dark text-white p-1 text-lg">
-                  {shelterAnimal.status === "available"
-                    ? "Sin adoptar aún"
-                    : "Adoptado"}
+                  {shelterAnimal.status === "available" ? (
+                    <p>Sin adoptar aún</p>
+                  ) : (
+                    <p className="bg-greenL text-white font-bold animate-bounce animate-pulse">
+                      Adoptado 😻
+                    </p>
+                  )}
                 </div>
                 <div>
                   <AnimalPhotoSlider animal={shelterAnimal} />
@@ -147,16 +158,16 @@ export default function FetchAnimals() {
               <div className="w-full">
                 <button
                   type="button"
-                  className="mt-auto w-1/3 justify-center bg-blue-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
+                  className="w-4/5 justify-center bg-blue-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
                   onClick={() => handleButtonClick(shelterAnimal, "modify")}
                 >
-                  Modificar animal
+                  Ver o Modificar animal
                 </button>
                 <div className="flex flex-col content-center w-full justify-center my-2">
                   <div>
                     <button
                       type="button"
-                      className="mt-auto w-1/3 justify-center bg-blue-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
+                      className="w-4/5 justify-center bg-blue-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
                       onClick={() => handleButtonClick(shelterAnimal, "upload")}
                     >
                       📷 Añadir fotos
@@ -167,7 +178,7 @@ export default function FetchAnimals() {
                   <div>
                     <button
                       type="button"
-                      className="mt-auto w-1/3 justify-center bg-red-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
+                      className="w-4/5 justify-center bg-red-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
                       onClick={() => handleButtonClick(shelterAnimal, "delete")}
                     >
                       ❌ Borrar
@@ -181,26 +192,32 @@ export default function FetchAnimals() {
           <p>No se encontraron animales.</p>
         )}
       </div>
-      <div>
-        {modifyAnimal ? (
-          <div ref={formRef}>
-            <EditAnimalFormShelterEd
-              animal={selectedAnimal}
-              onClose={handleCloseEditForm}
+      <ModalScreen isOpen={isModalOpen} onClose={handleCloseModal}>
+        {modifyAnimal && selectedAnimal && (
+          <EditAnimalFormShelterEd
+            animal={selectedAnimal}
+            onClose={handleCloseModal}
+          />
+        )}
+        {uplPhoto && selectedAnimal && (
+          <>
+            {console.log(
+              `Renderizando componente UploadPhoto y el animal recibido es ${selectedAnimal._id}`
+            )}
+            <UploadPhoto
+              animalId={selectedAnimal._id}
+              onClose={handleCloseModal}
             />
-          </div>
-        ) : null}
-      </div>
-      <div className="flex justify-center">
-        <div className="w-3/6" ref={photoRef}>
-          {uplPhoto && <UploadPhoto animalId={selectedAnimal._id} />}
-        </div>
-      </div>
-      <div className="flex justify-center">
-        <div className="w-3/6" ref={deleteFormRef}>
-          {deleteAnimal && <DeleteAnimal animal={selectedAnimal} />}
-        </div>
-      </div>
+          </>
+        )}
+        {deleteAnimal && selectedAnimal && (
+          <ShelterDeleteAnimal
+            animal={selectedAnimal}
+            onClose={handleCloseModal}
+          />
+        )}
+        {createAnimal && <ShelterCreateAnimals onClose={handleCloseModal} />}
+      </ModalScreen>
     </div>
   );
 }

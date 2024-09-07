@@ -1,11 +1,12 @@
 import Navbar from "@/components/Navbar";
 import RequestViewAction from "@/components/shelters/RequestViewAction";
+import ShelterPanel from "@/components/shelters/ShelterPanel";
 import ShelterRequest from "@/components/shelters/ShelterRequest";
 import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function ShelterMenu() {
+export default function ShelterRequestPage() {
   //1º En un UseEffect hacemos un fetch con todos los datos de la Protectora.
   //Guardar datos recibidos en un state:
   const [shelter, setShelter] = useState({});
@@ -97,43 +98,62 @@ export default function ShelterMenu() {
   return (
     <div className="bg-background">
       <Navbar />
+      <ShelterPanel />
       <div className="flex flex-col justify-start min-h-screen text-blue-dark text-center text-3xl">
         {isShelterLoggedIn ? (
-          <div>
-            <h1 className="pt-5">
-              Bienvenid@s a nuestra página {shelter.name}
-            </h1>
-            <div className="bg-pink-dark py-2 mt-3 ">
-              <h3 className="text-2xl text-white">¿Que deseas hacer?</h3>
-            </div>
-            <div className="flex justify-center text-lg space-x-5 mt-20">
-              <div>
-                <a
-                  className="bg-blue-dark shadow-xl p-5 rounded-full text-white hover:text-blue-dark hover:bg-white"
-                  href="ShelterAnimals"
-                >
-                  Añadir animal / Ver tus animales
-                </a>
-              </div>
-              <div>Revisar información de tu perfil</div>
-            </div>
-            <div className="flex justify-center text-lg space-x-5 mt-20">
-              <div>
-                <a
-                  className="bg-blue-dark shadow-xl p-5 rounded-full text-white hover:text-blue-dark hover:bg-white"
-                  href="ShelterRequestPage"
-                >
-                  Ver Solicitudes
-                </a>
-              </div>
-              <div>Revisar información de tu perfil</div>
-            </div>
+          <div className="mt-10">
+            <ShelterRequest fillRequestState={fillRequestState} />
           </div>
         ) : (
           <div>
             <p className="text-5xl">ERROR 404 : Esta página no existe</p>
           </div>
         )}
+        <div>
+          <p className="text-center text-2xl text-blue-dark my-5">
+            {requests.length > 0 ? (
+              <div>
+                {status}: {requests.length}{" "}
+              </div>
+            ) : (
+              <></>
+            )}
+          </p>
+          {requests.length > 0 && (
+            <div className="flex justify-center flex-wrap text-base gap-3">
+              {requests.map((request) => (
+                <div
+                  key={request._id}
+                  className={`p-3 mx-5 my-3 rounded ${bgColor} shadow-xl`}
+                >
+                  <div className="mb-2 bg-white text-blue-dark px-2 rounded-xl">
+                    <span className="font-bold">Estado: </span>
+                    <span>
+                      {request.status === "accepted"
+                        ? "Aceptada ✅"
+                        : request.status === "pending"
+                        ? "Pendiente ❔"
+                        : "Rechazada ❌"}
+                    </span>
+                  </div>
+                  <div className="mb-2">
+                    <span className="font-bold">Mascota:</span>{" "}
+                    {request.reqAnimalName}
+                  </div>
+                  <div className="mb-2">
+                    <span className="font-bold">Raza:</span>{" "}
+                    {request.reqAnimalSpecie}
+                  </div>
+                  <div className="mb-4">
+                    <span className="font-bold">Solicitante:</span>{" "}
+                    {request.applicantName} {request.applicantLastName}
+                  </div>
+                  <RequestViewAction request={request} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

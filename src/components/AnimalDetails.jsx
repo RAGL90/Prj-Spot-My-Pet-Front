@@ -128,6 +128,18 @@ export default function AnimalDetails({ selectedAnimal, nonResponsive }) {
             <span className="w-full"> {selectedAnimal?.mainColor} </span>
           </div>
         </div>
+        {selectedAnimal.cost ? (
+          <div className="w-full flex text-pink-dark text-l my-2 justify-center">
+            <div className="text-center w-full">
+              <span className="font-bold">Coste de adopción: </span>
+              <span className="w-full text-red-dark">
+                {selectedAnimal.cost} €
+              </span>
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
         <hr />
         <div className="w-full flex text-pink-dark text-l my-2 text-center">
           <div className="w-full text-center">

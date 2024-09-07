@@ -67,7 +67,7 @@ export default function ShelterRequest({ fillRequestState }) {
         className="bg-blue-dark text-white p-2 rounded-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-blue-medium duration-300"
         onClick={() => handleOpenModal()}
       >
-        Ver solicitudes
+        ¿Qué solicitudes quieres ver?
       </button>
 
       <ModalScreen

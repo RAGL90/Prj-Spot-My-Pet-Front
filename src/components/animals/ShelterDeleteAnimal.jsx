@@ -1,12 +1,16 @@
 import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useState } from "react";
 
-export default function DeleteAnimal({ animal }) {
+export default function ShelterDeleteAnimal({ animal }) {
   const [animalId, setAnimalId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [message, setMessage] = useState("");
   const [color, setColor] = useState("");
+
+  useEffect(() => {
+    setAnimalId(animal._id);
+  }, []);
 
   useEffect(() => {
     //En caso de éxito cerramos la ventana modal automáticamente
@@ -18,16 +22,12 @@ export default function DeleteAnimal({ animal }) {
     }
   }, [isSuccess]);
 
-  useEffect(() => {
-    setAnimalId(animal._id);
-  }, []);
-
   const handleConfirmButton = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(BASE_URL + "user/animal", {
+      const response = await fetch(BASE_URL + "shelter/animal", {
         method: "DELETE",
         headers: {
           "content-type": "application/json",
@@ -64,7 +64,7 @@ export default function DeleteAnimal({ animal }) {
   };
 
   return (
-    <div className="bg-red-light text-white rounded-xl my-3 py-2">
+    <div className="bg-red-light text-white text-center mt-2">
       <p className="text-2xl">⚠️</p>
       <p>
         <span>¿Estás seguro/a de querer eliminar el registro de </span>

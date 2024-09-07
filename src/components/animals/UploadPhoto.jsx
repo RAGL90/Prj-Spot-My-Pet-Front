@@ -22,7 +22,7 @@ export default function UploadPhoto(props) {
 
     if (files.length === 0) {
       setMessage("Por favor, añada al menos una imagen");
-      setColor("text-red");
+      setColor("text-red-dark");
       return;
     }
 
@@ -61,7 +61,7 @@ export default function UploadPhoto(props) {
       }
 
       setMessage("¡Fotos guardadas correctamente!");
-      setColor("greenL");
+      setColor("text-greenL");
       setUploadSuccess(true);
     } catch (error) {
       setMessage(`Error al subir las imágenes: ${error.message}`);
