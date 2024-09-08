@@ -1,10 +1,12 @@
 import Navbar from "@/components/Navbar";
 import DeleteUser from "@/components/users/DeleteUser";
-import UserModify from "@/components/users/UserModify";
+
 import ShelterPanel from "@/components/shelters/ShelterPanel";
 import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import ModalScreen from "@/components/ModalScreen";
+import ShelterProfileModify from "@/components/shelters/ShelterProfileModify";
 
 export default function ShelterProfile() {
   //Guardar datos recibidos del fetch en un state:
@@ -17,6 +19,11 @@ export default function ShelterProfile() {
   const [message, setMessage] = useState("");
   const [color, setColor] = useState("");
 
+  //States para el manejo del modal
+  const [reFetch, setReFetch] = useState(false);
+  const [modifyShelter, setModifyShelter] = useState(false);
+  const [deleteShelter, setDeleteShelter] = useState(false);
+
   //              ********** Declaraciones y funciones para ventana Modal ***********
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,9 +32,34 @@ export default function ShelterProfile() {
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setModifyShelter(false); // Esto esconde el formulario
+    setModifyShelter(false); // Esto asegura esconder el formulario
+    setReFetch(true); // Actualizamos los nuevos datos del perfil
   };
+
+  useEffect(() => {
+    if (reFetch) {
+      fetchData();
+      setReFetch(false);
+    }
+  }, [reFetch]);
+
   //                **********                  Fin declaraciones ventana Modal         **********
+  const handleButtonClick = (actionType) => {
+    // Abre el modal en cualquier acción
+    handleOpenModal();
+
+    if (actionType === "modify") {
+      setModifyShelter(true);
+      setDeleteShelter(false);
+      return;
+    } else if (actionType === "delete") {
+      setModifyShelter(true);
+      setDeleteAnimal(false);
+    } else {
+      console.log("Sin accion especificada");
+      handleCloseModal(); // Cierra el modal si no hay acción
+    }
+  };
 
   const isShelterLoggedIn = useSelector(
     (state) => state.shelterLogin.isShelterLoggedIn
@@ -71,16 +103,6 @@ export default function ShelterProfile() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const UTCtoLocalDate = (animalBirth) => {
-    const date = new Date(animalBirth);
-    const day = date.getDate();
-    const month = date.getMonth() + 1; // Los meses en JavaScript empiezan en 0
-    const year = date.getFullYear();
-    return `${day.toString().padStart(2, "0")}/${month
-      .toString()
-      .padStart(2, "0")}/${year}`;
-  };
 
   return (
     <div className="bg-background min-h-screen">
@@ -179,10 +201,13 @@ export default function ShelterProfile() {
 
                 <div className="flex flex-row space-x-2 align-center">
                   <div>
-                    {/* <UserModify
-                        shelter={shelter}
-                        refreshShelterData={fetchData}
-                      /> */}
+                    <button
+                      type="button"
+                      className="w-full justify-center bg-blue-dark rounded-full text-white p-2 shadow hover:bg-pink-dark"
+                      onClick={() => handleButtonClick("modify")}
+                    >
+                      Modificar Perfil
+                    </button>
                   </div>
                   <div>{/* <DeleteUser shelter={shelter} /> */}</div>
                 </div>
@@ -212,6 +237,14 @@ export default function ShelterProfile() {
             </div>
           )}
         </div>
+        <ModalScreen isOpen={isModalOpen} onClose={handleCloseModal}>
+          {modifyShelter && (
+            <ShelterProfileModify
+              shelter={shelter}
+              onClose={handleCloseModal}
+            />
+          )}
+        </ModalScreen>
       </div>
     </div>
   );
