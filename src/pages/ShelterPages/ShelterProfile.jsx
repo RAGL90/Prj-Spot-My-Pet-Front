@@ -1,5 +1,4 @@
 import Navbar from "@/components/Navbar";
-import DeleteUser from "@/components/users/DeleteUser";
 
 import ShelterPanel from "@/components/shelters/ShelterPanel";
 import { BASE_URL } from "@/core/config/configDev";
@@ -7,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ModalScreen from "@/components/ModalScreen";
 import ShelterProfileModify from "@/components/shelters/ShelterProfileModify";
+import ShelterDelete from "@/components/shelters/ShelterDelete";
 
 export default function ShelterProfile() {
   //Guardar datos recibidos del fetch en un state:
@@ -53,8 +53,8 @@ export default function ShelterProfile() {
       setDeleteShelter(false);
       return;
     } else if (actionType === "delete") {
-      setModifyShelter(true);
-      setDeleteShelter(false);
+      setModifyShelter(false);
+      setDeleteShelter(true);
     } else {
       console.log("Sin accion especificada");
       handleCloseModal(); // Cierra el modal si no hay acción
@@ -212,7 +212,7 @@ export default function ShelterProfile() {
                   <div className="mt-3">
                     <button
                       className="rounded-full bg-red-dark shadow-xl text-white-light text-l p-2 m-2  transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-red-light duration-300"
-                      onClick={() => handleOpenModal("delete")}
+                      onClick={() => handleButtonClick("delete")}
                     >
                       ❌ Eliminar cuenta
                     </button>
@@ -252,7 +252,7 @@ export default function ShelterProfile() {
             />
           )}
           {deleteShelter && (
-            <ShelterDeleteAnimal shelter={shelter} onClose={handleCloseModal} />
+            <ShelterDelete shelter={shelter} onClose={handleCloseModal} />
           )}
         </ModalScreen>
       </div>
