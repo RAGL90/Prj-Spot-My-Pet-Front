@@ -54,7 +54,7 @@ export default function ShelterProfile() {
       return;
     } else if (actionType === "delete") {
       setModifyShelter(true);
-      setDeleteAnimal(false);
+      setDeleteShelter(false);
     } else {
       console.log("Sin accion especificada");
       handleCloseModal(); // Cierra el modal si no hay acción
@@ -199,7 +199,7 @@ export default function ShelterProfile() {
                   </ul>
                 </div>
 
-                <div className="flex flex-row space-x-2 align-center">
+                <div className="flex flex-col space-x-2 align-center">
                   <div>
                     <button
                       type="button"
@@ -209,7 +209,14 @@ export default function ShelterProfile() {
                       Modificar Perfil
                     </button>
                   </div>
-                  <div>{/* <DeleteUser shelter={shelter} /> */}</div>
+                  <div className="mt-3">
+                    <button
+                      className="rounded-full bg-red-dark shadow-xl text-white-light text-l p-2 m-2  transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-red-light duration-300"
+                      onClick={() => handleOpenModal("delete")}
+                    >
+                      ❌ Eliminar cuenta
+                    </button>
+                  </div>
                 </div>
               </div>
               {/* ********************************************** */}
@@ -243,6 +250,9 @@ export default function ShelterProfile() {
               shelter={shelter}
               onClose={handleCloseModal}
             />
+          )}
+          {deleteShelter && (
+            <ShelterDeleteAnimal shelter={shelter} onClose={handleCloseModal} />
           )}
         </ModalScreen>
       </div>
