@@ -115,7 +115,14 @@ export default function ShelterMenu() {
                   Añadir animal / Ver tus animales
                 </a>
               </div>
-              <div>Revisar información de tu perfil</div>
+              <div>
+                <a
+                  className="bg-blue-dark shadow-xl p-5 rounded-full text-white hover:text-blue-dark hover:bg-white"
+                  href="ShelterProfile"
+                >
+                  Ver perfil Asociación
+                </a>
+              </div>
             </div>
             <div className="flex justify-center text-lg space-x-5 mt-20">
               <div>
@@ -126,7 +133,6 @@ export default function ShelterMenu() {
                   Ver Solicitudes
                 </a>
               </div>
-              <div>Revisar información de tu perfil</div>
             </div>
           </div>
         ) : (

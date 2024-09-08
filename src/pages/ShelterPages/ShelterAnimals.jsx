@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import ShelterPanel from "@/components/shelters/ShelterPanel";
 import ShelterFetchAnimals from "@/components/shelters/ShelterFetchAnimals";
-import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 

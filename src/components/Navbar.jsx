@@ -142,14 +142,6 @@ export default function Navbar() {
       {isOpen && (
         <div className="absolute top-16 left-0 w-full flex flex-col z-50 rounded items-center md:hidden">
           <div className="w-full">
-            <a
-              href="#"
-              className="block text-center text-white-bright bg-pink-dark rounded-full border border-white py-2"
-            >
-              Inicio
-            </a>
-          </div>
-          <div className="w-full">
             <button
               onClick={openUserLogin}
               className="w-full block text-center text-white-bright bg-pink-dark rounded-full border border-white py-2"
