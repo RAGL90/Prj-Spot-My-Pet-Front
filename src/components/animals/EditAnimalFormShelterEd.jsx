@@ -4,9 +4,9 @@ import { bool, boolean, object, string } from "yup";
 import AnimalPhotoSlider from "../AnimalPhotoSlider";
 import { BASE_URL } from "@/core/config/configDev";
 
-export default function EditAnimalForm(props) {
+export default function EditAnimalForm({ animal, onClose, setChanges }) {
   //Animal para el formulario y onClose para cerrar el modal.
-  const { animal, onClose } = props;
+  // const { animal, onClose } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [animalSpecie, setAnimalSpecie] = useState(animal.specie);
@@ -23,14 +23,19 @@ export default function EditAnimalForm(props) {
   }, [animal.specie]); // Agrega una dependencia aquí para asegurarte de que se actualiza si cambia la prop
 
   useEffect(() => {
-    //En caso de éxito cerramos la ventana modal automáticamente
+    let timer;
     if (isSuccess) {
-      setTimeout(() => {
+      timer = setTimeout(() => {
         setIsSuccess(false);
+        setReply({ value: "", color: "" });
+        setChanges(true);
         onClose();
-      }, "5000");
+      }, 3500);
     }
-  }, [isSuccess]);
+
+    // Limpiar el temporizador cuando el componente se desmonte o el estado cambie
+    return () => clearTimeout(timer);
+  }, [isSuccess, onClose]);
 
   const handleChangeSpecie = (e, setFieldValue) => {
     const { value } = e.target;
@@ -50,9 +55,14 @@ export default function EditAnimalForm(props) {
 
   const makeImagePrimary = (index) => {
     if (index !== 0) {
-      const newPhotos = [...photos];
+      console.log("El array anterior es: ", photos);
+      const newPhotos = [...photos]; //Copiamos array de photos (en el state)
+      //Modificamos el orden:
+      //Con splice extraemos la foto indicada (primaryPhoto)
       const primaryPhoto = newPhotos.splice(index, 1)[0];
+      //Con unShift la introducimos en el primer índice:
       newPhotos.unshift(primaryPhoto);
+      //Configuramos
       setPhotos(newPhotos);
       console.log("El nuevo array de fotos es: " + newPhotos);
     }
@@ -89,8 +99,13 @@ export default function EditAnimalForm(props) {
       });
       //Respuesta afirmativa guardamos el useState
       setAnimalId(data.animalId);
+      setIsSuccess(true);
     } catch (error) {
       console.log(error);
+      setReply({
+        value: `Hubo un error al modificar la mascota: ${error.message}`,
+        color: "text-red",
+      });
       setIsSuccess(false);
     } finally {
       //Aqui entrará independientemente de que haya exito o error:

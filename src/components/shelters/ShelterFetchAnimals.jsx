@@ -14,6 +14,7 @@ export default function FetchAnimals() {
   const [uplPhoto, setUplPhoto] = useState(false);
   const [deleteAnimal, setDeleteAnimal] = useState(false);
   const [createAnimal, setCreateAnimal] = useState(false);
+  const [changes, setChanges] = useState(false); //Este solo es para indicar cambios
 
   //              ********** Declaraciones y funciones para ventana Modal ***********
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,43 +30,44 @@ export default function FetchAnimals() {
   };
   //                **********                  Fin declaraciones ventana Modal         **********
 
-  //Preparamos handler para ser llamado desde el componente hijo "EditAnimalForm"
-  const handleCloseEditForm = () => {
-    setModifyAnimal(false); // Esto esconde el formulario
-    setSelectedAnimal(null); // Opcional, limpia el animal seleccionado si es necesario
+  const fetchAnimals = async () => {
+    //1º Buscamos en el localStorage para obtener el token
+    const storedToken = localStorage.getItem("token");
+    console.log("Me he iniciado");
+
+    //2º Si lo hay lo lanzamos al fetch
+    if (storedToken) {
+      try {
+        const response = await fetch(`${BASE_URL}shelter/animal`, {
+          method: "GET",
+          headers: {
+            Accept: "*/*",
+            "auth-token": storedToken,
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        // 3º Creamos array con los animales del usuario
+        const animalsData = await response.json();
+        console.log(response);
+
+        setShelterAnimals(animalsData.data);
+      } catch (error) {
+        console.log("Error durante la carga de animales", error);
+        setShelterAnimals([]);
+      }
+    }
   };
 
   useEffect(() => {
-    async function initTokenFetchAnimal() {
-      //1º Buscamos en el localStorage para obtener el token
-      const storedToken = localStorage.getItem("token");
-
-      //2º Si lo hay lo lanzamos al fetch
-      if (storedToken) {
-        try {
-          const response = await fetch(`${BASE_URL}shelter/animal`, {
-            method: "GET",
-            headers: {
-              Accept: "*/*",
-              "auth-token": storedToken,
-            },
-          });
-          if (!response.ok) {
-            throw new Error(`Error: ${response.status} ${response.statusText}`);
-          }
-          // 3º Creamos array con los animales del usuario
-          const animalsData = await response.json();
-          console.log(response);
-
-          setShelterAnimals(animalsData.data);
-        } catch (error) {
-          console.log("Error durante la carga de animales", error);
-          setShelterAnimals([]);
-        }
-      }
-    }
-    initTokenFetchAnimal();
+    fetchAnimals();
   }, []);
+
+  useEffect(() => {
+    fetchAnimals();
+    setChanges(false);
+  }, [changes]);
 
   const handleButtonClick = (shelterAnimals, actionType) => {
     // Configurar el animal seleccionado para transmitirlo a su correspondiente acción
@@ -197,6 +199,7 @@ export default function FetchAnimals() {
           <EditAnimalFormShelterEd
             animal={selectedAnimal}
             onClose={handleCloseModal}
+            setChanges={setChanges}
           />
         )}
         {uplPhoto && selectedAnimal && (
@@ -207,6 +210,7 @@ export default function FetchAnimals() {
             <UploadPhoto
               animalId={selectedAnimal._id}
               onClose={handleCloseModal}
+              setChanges={setChanges}
             />
           </>
         )}
@@ -214,6 +218,7 @@ export default function FetchAnimals() {
           <ShelterDeleteAnimal
             animal={selectedAnimal}
             onClose={handleCloseModal}
+            setChanges={setChanges}
           />
         )}
         {createAnimal && <ShelterCreateAnimals onClose={handleCloseModal} />}
