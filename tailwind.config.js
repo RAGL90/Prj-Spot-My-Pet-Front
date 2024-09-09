@@ -33,6 +33,9 @@ module.exports = {
       fontFamily: {
         Comfortaa: ["Comfortaa", "Helvetica"],
       },
+      backgroundImage: {
+        "shelter-menu": "url('/imageComponents/shelter-menu.jpg')",
+      },
     },
   },
   plugins: [],

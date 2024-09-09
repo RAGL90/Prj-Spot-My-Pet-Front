@@ -97,41 +97,51 @@ export default function ShelterMenu() {
   return (
     <div className="bg-background">
       <Navbar />
-      <div className="flex flex-col justify-start min-h-screen text-blue-dark text-center text-3xl">
+      <div>
         {isShelterLoggedIn ? (
-          <div>
-            <h1 className="pt-5">
+          <div className="flex flex-col justify-start min-h-screen text-blue-dark text-center text-3xl bg-white md:bg-pink-softest">
+            <h1 className="pt-1 bg-background">
               Bienvenid@s a nuestra página {shelter.name}
             </h1>
-            <div className="bg-pink-dark py-2 mt-3 ">
-              <h3 className="text-2xl text-white">¿Que deseas hacer?</h3>
+            <div className="bg-pink-dark py-2">
+              <h3 className="text-2xl text-white animate-pulse">
+                ¿Qué deseas hacer?
+              </h3>
             </div>
-            <div className="flex justify-center text-lg space-x-5 mt-20">
-              <div>
-                <a
-                  className="bg-blue-dark shadow-xl p-5 rounded-full text-white hover:text-blue-dark hover:bg-white"
-                  href="ShelterAnimals"
-                >
-                  Añadir animal / Ver tus animales
-                </a>
+            <div className="md:bg-shelter-menu md:bg-no-repeat md:bg-bottom md:bg-scroll md:bg-cover w-full md:h-screen">
+              <div className="flex flex-col md:flex-row justify-center text-lg md:space-x-5 space-y-5 mb-2">
+                <div className="mt-5 md:opacity-85">
+                  <a
+                    className="bg-blue-dark shadow-xl p-2 rounded-full text-white hover:text-blue-dark hover:bg-white"
+                    href="ShelterAnimals"
+                  >
+                    Añadir animal / Ver tus animales
+                  </a>
+                </div>
+                <div className="md:opacity-85">
+                  <a
+                    className="bg-blue-dark shadow-xl p-2 rounded-full text-white hover:text-blue-dark hover:bg-white"
+                    href="ShelterProfile"
+                  >
+                    Ver perfil Asociación
+                  </a>
+                </div>
+                <div>
+                  <div className="md:opacity-85">
+                    <a
+                      className="bg-blue-dark shadow-xl p-2 rounded-full text-white hover:text-blue-dark hover:bg-white"
+                      href="ShelterRequestPage"
+                    >
+                      Ver Solicitudes
+                    </a>
+                  </div>
+                </div>
               </div>
-              <div>
-                <a
-                  className="bg-blue-dark shadow-xl p-5 rounded-full text-white hover:text-blue-dark hover:bg-white"
-                  href="ShelterProfile"
-                >
-                  Ver perfil Asociación
-                </a>
-              </div>
-            </div>
-            <div className="flex justify-center text-lg space-x-5 mt-20">
-              <div>
-                <a
-                  className="bg-blue-dark shadow-xl p-5 rounded-full text-white hover:text-blue-dark hover:bg-white"
-                  href="ShelterRequestPage"
-                >
-                  Ver Solicitudes
-                </a>
+              <div className="md:hidden">
+                <img
+                  src="/imageComponents/shelter-menu-m.jpg"
+                  alt="Menu protectoras"
+                />
               </div>
             </div>
           </div>

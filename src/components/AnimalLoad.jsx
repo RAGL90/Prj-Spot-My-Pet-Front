@@ -86,14 +86,14 @@ function AnimalLoad({ filters }) {
       <div className="bg-pink-light flex flex-row flex-1 flex-wrap justify-center items-start gap-3 py-5">
         {animals.map((animal) => (
           <div
-            className="bg-blue-dark shadow-xl rounded-xl w-11/12 m-1 md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"
+            className="bg-background shadow-xl rounded-xl w-11/12 m-1 md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"
             key={animal._id}
           >
             <div className="w-full flex items-center justify-between relative">
-              <div className="w-full text-center text-2xl text-white-light px-4 mb-2">
+              <div className="w-full text-center text-2xl text-blue-dark px-4 mb-2">
                 <p>{animal.name}</p>
               </div>
-              <div className="w-auto justify-end text-2xl rounded-full bg-blue-medium text-center flex px-1">
+              <div className="w-auto justify-end text-2xl rounded-full bg-blue-medium text-center flex px-1 mr-1">
                 <p className="shadow-xl">
                   {animal.gender === "macho" ? "♂️" : "♀️"}
                 </p>
@@ -101,7 +101,7 @@ function AnimalLoad({ filters }) {
             </div>
             {/* <AnimalPhotoSlider animal={animal} nonResponsive={nonResponsive} /> */}
             <PhotoView animal={animal} />
-            <div className="w-full text-center text-base text-white-light px-4">
+            <div className="w-full text-center text-base text-blue-dark px-4">
               <p>{animal.breed}</p>
             </div>
             <div className="w-full border-0 flex justify-center items-center mt-2">
