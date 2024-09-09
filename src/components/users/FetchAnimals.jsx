@@ -190,7 +190,9 @@ export default function FetchAnimals() {
       </div>
       <div className="flex justify-center">
         <div className="w-3/6" ref={photoRef}>
-          {uplPhoto && <UploadPhoto animalId={selectedAnimal._id} />}
+          {uplPhoto && selectedAnimal && (
+            <UploadPhoto animalId={selectedAnimal._id} />
+          )}
         </div>
       </div>
       <div className="flex justify-center">

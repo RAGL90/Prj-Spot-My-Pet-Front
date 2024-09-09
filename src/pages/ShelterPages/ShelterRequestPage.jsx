@@ -16,11 +16,13 @@ export default function ShelterRequestPage() {
 
   //Manejo de mensajes para mostrar al usuario:
   const [message, setMessage] = useState("");
+  const [reply, setReply] = useState({ value: "", color: "" });
   const [color, setColor] = useState("");
 
+  // Verificamos si la protectora está logueada
   const isShelterLoggedIn = useSelector(
     (state) => state.shelterLogin.isShelterLoggedIn
-  ); // Verificamos si la protectora está logueada
+  );
 
   const [requests, setRequests] = useState([]);
   const [status, setStatus] = useState("");
@@ -56,7 +58,7 @@ export default function ShelterRequestPage() {
     setRequests(requestList);
   };
 
-  //Queremos que haga un fetch al perfil
+  //Queremos que haga un fetch al perfil y setearlo para el manejo
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -94,7 +96,54 @@ export default function ShelterRequestPage() {
   useEffect(() => {
     fetchData();
   }, []);
-  //2º Enviamos esos datos a los módulos que sean necesarios.
+
+  //Fetch del contrato:
+  const handleViewContract = async (requestId) => {
+    setIsLoading(true);
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${BASE_URL}shelter/request/${requestId}`, {
+        method: "GET",
+        headers: {
+          Accept: "*/*",
+          "auth-token": token,
+        },
+      });
+
+      if (!response.ok) {
+        setReply({
+          value: `Error al obtener el contrato ${response.message}`,
+          color: "text-red",
+        });
+      }
+      console.log("OK");
+
+      const blob = await response.blob(); // Transformar la respuesta en un BLOB (Binary Large OBject) que es el PDF
+
+      /* Creamos una URL local para que el navegador acceda como nueva URL para poder abrirla despues en una pestaña */
+      const url = window.URL.createObjectURL(blob);
+
+      /* Damos la orden al navegador de abrir nuestra nueva URL, con titulo "_blank"
+      Se añade los parámetros:
+       · noopener -> Para aumentar seguridad, evitamos que la nueva pestaña pueda manipular la ventana original (Evita ataques dónde se cambia la página)
+       · noreferrrer -> Es también por seguridad, evita que sea rastreada y muestre el origen de la URL que hizo la solicitud. Evitando información sensible (que la tiene, siendo un contrato) 
+       */
+      window.open(url, "_blank", "noopener,noreferrer");
+
+      /* Limpiamos nuestro servidor de esta URL temporal a 100 ms, de forma que no consuma recursos y libere memoria
+         el usuario aún tendrá en la memoria de su navegador el PDF por lo tanto no le afecta liberar la URL */
+      setTimeout(() => window.URL.revokeObjectURL(url), 100);
+    } catch (error) {
+      setReply({
+        value: `Error al obtener el contrato ${error.message}`,
+        color: "text-red",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="bg-background">
       <Navbar />
@@ -147,6 +196,19 @@ export default function ShelterRequestPage() {
                   <div className="mb-4">
                     <span className="font-bold">Solicitante:</span>{" "}
                     {request.applicantName} {request.applicantLastName}
+                  </div>
+                  <div>
+                    {request.status === "accepted" ? (
+                      <button
+                        className="bg-white text-greenL px-1 rounded-xl font-bold hover:bg-blue-dark hover:text-white mb-3"
+                        disabled={isLoading}
+                        onClick={() => handleViewContract(request._id)}
+                      >
+                        Ver contrato de adopción
+                      </button>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                   <RequestViewAction request={request} />
                 </div>
