@@ -123,31 +123,31 @@ export default function Home() {
               </select>
             </div>
 
-            {/* Input para especie */}
+            {/* Input para breed */}
+            <div className="flex flex-col">
+              <label className="text-blue-dark font-bold" htmlFor="breed">
+                Raza del animal
+              </label>
+              <input
+                type="text"
+                id="breed"
+                name="breed"
+                value={filters.breed}
+                onChange={handleFilterChange}
+                className="p-2 rounded"
+                placeholder="Ej: Caniche, conejo, loro, etc"
+              />
+            </div>
+
+            {/* Input para specie */}
             <div className="flex flex-col">
               <label className="text-blue-dark font-bold" htmlFor="specie">
                 Especie
               </label>
-              <input
-                type="text"
+              <select
                 id="specie"
                 name="specie"
                 value={filters.specie}
-                onChange={handleFilterChange}
-                className="p-2 rounded"
-                placeholder="Especie (Ej: perro, gato)"
-              />
-            </div>
-
-            {/* Input para raza */}
-            <div className="flex flex-col">
-              <label className="text-blue-dark font-bold" htmlFor="breed">
-                Raza
-              </label>
-              <select
-                id="breed"
-                name="breed"
-                value={filters.breed}
                 onChange={handleFilterChange}
                 className="p-2 rounded"
               >
@@ -181,13 +181,13 @@ export default function Home() {
 
             {/* Select para provincia */}
             <div className="flex flex-col">
-              <label className="text-blue-dark font-bold" htmlFor="province">
+              <label className="text-blue-dark font-bold" htmlFor="location">
                 Provincia
               </label>
               <select
-                id="province"
-                name="province"
-                value={filters.province}
+                id="location"
+                name="location"
+                value={filters.location}
                 onChange={handleFilterChange}
                 className="p-2 rounded"
               >

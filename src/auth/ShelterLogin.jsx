@@ -115,13 +115,8 @@ export default function UserLogin({ onLoginSuccess }) {
           </button>
         </div>
         <div className="flex flex-row justify-between space-x-4">
-          <div>
-            {/* <a
-              href="/UsersPages/UserRegister"
-              className="text-blue-dark text-sm"
-            >
-              Registrarse
-            </a> */}
+          <div className="text-sm hover:text-blue-dark">
+            <a href="/ShelterPages/ShelterRegister">Registrarse</a>
           </div>
           <div>
             <a href="/" className="p-2 text-pink-medium text-sm">
