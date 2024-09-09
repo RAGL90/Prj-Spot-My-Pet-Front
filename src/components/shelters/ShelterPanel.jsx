@@ -28,20 +28,24 @@ export default function ShelterPanel() {
   return (
     <div className="flex flex-col font-Comfortaa justify-center space-y-2 md:space-y-0 md:flex-row md:space-x-4 transition-opacity duration-300 bg-blue-dark py-2">
       <div className="w-auto bg-blue-lightest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
-        <div>🐱🐶🐰🐹🦜</div>
-        <a href="/ShelterPages/ShelterAnimals">Gestionar animales</a>
+        <a href="/ShelterPages/ShelterAnimals">
+          <div>🐱🐶🐰🐹🦜</div>Gestionar animales
+        </a>
       </div>
       <div className="w-auto bg-blue-lightest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
-        <div>📝</div>
-        <a href="/ShelterPages/ShelterRequestPage">Ir a solicitudes</a>
+        <a href="/ShelterPages/ShelterRequestPage">
+          <div>📝</div>Ir a solicitudes
+        </a>
       </div>
       <div className="w-auto bg-blue-lightest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
-        <div>🫂</div>
-        <a href="/ShelterPages/ShelterProfile">Ver / Modificar perfil</a>
+        <a href="/ShelterPages/ShelterProfile">
+          <div>🫂</div>Ver / Modificar perfil
+        </a>
       </div>
       <div className="w-auto bg-blue-lightest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
-        <div>🔓</div>
-        <button onClick={handleLogOut}> Desconectar</button>
+        <button onClick={handleLogOut}>
+          <div>🔓</div> Desconectar
+        </button>
       </div>
     </div>
   );
