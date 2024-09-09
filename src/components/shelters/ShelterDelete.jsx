@@ -2,11 +2,13 @@ import { BASE_URL } from "@/core/config/configDev";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"; //useDispatch para logout
 import { logoutShelter } from "./Redux/ShelterLoginAction";
+import { useRouter } from "next/router";
 
 export default function ShelterDelete({ shelter, onClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [reply, setReply] = useState({ value: "", color: "" });
+  const router = useRouter();
 
   const handleConfirmButton = async (e) => {
     setIsLoading(true);
@@ -59,7 +61,7 @@ export default function ShelterDelete({ shelter, onClose }) {
         // Disparamos estado logout en redux
         dispatch(logoutShelter());
         // Redirigimos a la raíz
-        navigate("/");
+        router.push("/");
       }, 3000);
 
       // Limpiar el timeout en caso de desmontar el componente
@@ -96,7 +98,7 @@ export default function ShelterDelete({ shelter, onClose }) {
         </ul>
       </div>
       <div className="bg-pink-dark text-white text-center text-xl p-2 mt-5">
-        <p>¿Están seguros de eliminar vuestra cuentra de asociación?</p>
+        <p>¿Confirma la eliminación de cuenta?</p>
       </div>
       <div className="w-full flex flex-row justify-center my-3 space-x-10">
         <button

@@ -37,7 +37,7 @@ export default function ShelterPanel() {
       </div>
       <div className="w-auto bg-blue-lightest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
         <div>🫂</div>
-        <a href="/UsersPages/UserProfile">Ver / Modificar perfil</a>
+        <a href="/ShelterPages/ShelterProfile">Ver / Modificar perfil</a>
       </div>
       <div className="w-auto bg-blue-lightest text-xl text-center text-blue-dark border rounded-full p-2 shadow hover:bg-blue-medium hover:text-white">
         <div>🔓</div>
