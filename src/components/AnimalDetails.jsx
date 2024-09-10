@@ -5,7 +5,11 @@ import { BASE_URL } from "@/core/config/configDev";
 
 export default function AnimalDetails({ selectedAnimal, nonResponsive }) {
   const isLoggedIn = useSelector((state) => state.login.userLog);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [age, setAge] = useState({ diffYear: 0, diffMonth: 0 });
+
+  const [reply, setReply] = useState({ message: "", color: "" });
 
   useEffect(() => {
     const birthdate = new Date(selectedAnimal.birthDate);
@@ -30,6 +34,7 @@ export default function AnimalDetails({ selectedAnimal, nonResponsive }) {
 
   const handleRequest = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const token = localStorage.getItem("token");
     console.log(token);
     console.log(selectedAnimal._id);
@@ -55,10 +60,16 @@ export default function AnimalDetails({ selectedAnimal, nonResponsive }) {
             Mensaje: ${data.message}`
           );
         }
-
+        setReply({ message: "Solicitud enviada", color: "text-greenL" });
         console.log("Hecho todo perfecto: ", data);
       } catch (error) {
         console.log("Error " + error.message + " : " + error.error);
+        setReply({
+          message: "No se ha podido enviar solicitud",
+          color: "text-red-dark",
+        });
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchRequest();
@@ -150,8 +161,13 @@ export default function AnimalDetails({ selectedAnimal, nonResponsive }) {
         <hr className="text-blue-dark" />
         <div className="w-full flex justify-center text-blue-dark text-center mt-2 mb-2">
           {isLoggedIn ? (
-            <div className="bg-blue-dark text-white shadow-xl text-xl rounded-full px-3 py-1 mt-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-pink-darkduration-300 ">
-              <button onClick={handleRequest}>Solicitar adopción</button>
+            <div>
+              <div className="bg-blue-dark text-white shadow-xl text-xl rounded-full px-3 py-1 mt-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-pink-darkduration-300 ">
+                <button onClick={handleRequest} disabled={isLoading}>
+                  Solicitar adopción
+                </button>
+              </div>
+              <div className={`text-base ${reply.color}`}>{reply.message}</div>
             </div>
           ) : (
             <div>
