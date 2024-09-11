@@ -124,7 +124,8 @@ export default function UserFormikReg() {
           pswd: "",
           tipoNIF: "",
           NIF: "",
-          birth: "",
+          //Enviamos del FRONT birthDate, en el back se transformará en birth
+          birthDate: "",
           name: "",
           lastname: "",
           province: "",
@@ -204,7 +205,7 @@ export default function UserFormikReg() {
             <div className="w-3/4 min-w-[150px]">
               <Field
                 type="text"
-                name="birth"
+                name="birthDate"
                 placeholder="ej: 31/01/2024"
                 className="ml-1 pl-1 w-full border border-blue-dark rounded-full shadow-xl hover:bg-white hover:border-red focus:outline-none focus:ring-1"
               />

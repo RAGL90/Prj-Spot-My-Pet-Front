@@ -73,7 +73,12 @@ export default function FetchAnimals() {
           }
           // 3º Creamos array con los animales del usuario
           const animalsData = await response.json();
-          setUserAnimals(animalsData.data);
+          // Verificamos si "data" es un array antes de llamar a setUserAnimals
+          if (Array.isArray(animalsData.data)) {
+            setUserAnimals(animalsData.data);
+          } else {
+            setUserAnimals([]); // En caso de que no sea un array, lo manejamos como vacío
+          }
         } catch (error) {
           console.log("Error durante la carga de animales", error);
           setUserAnimals([]);
@@ -175,7 +180,7 @@ export default function FetchAnimals() {
             </div>
           ))
         ) : (
-          <p>No se encontraron animales.</p>
+          <p>No se encontraron animales</p>
         )}
       </div>
       <div>
