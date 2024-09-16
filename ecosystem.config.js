@@ -2,14 +2,15 @@ module.exports = {
   apps: [
     {
       name: "SpotMyPet-Frontend",
-      script: "npm",
+      script: "node_modules/next/dist/bin/next",
       args: "start",
       cwd: "/var/www/Prj-Spot-My-Pet-Front",
-      interpreter: "none",
       env: {
         NODE_ENV: "production",
-        PORT: 3001, // Configuramos el puerto 3001
-        // Otras variables de entorno si las tienes
+        PORT: 3001,
+        NEXT_PUBLIC_IMAGE_PROTOCOL: "https",
+        NEXT_PUBLIC_IMAGE_HOSTNAME: "spotmypet.es",
+        // Otras variables de entorno
       },
     },
   ],
