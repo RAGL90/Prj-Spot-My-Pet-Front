@@ -27,7 +27,7 @@ function PhotoView({ animal }) {
           alt={imageAlt}
           className="rounded-lg shadow-xl"
           priority={true}
-          unoptimized={true}
+          unoptimized={true} //LINEA PARA PRODUCCION CONFLICTO CON NGINX
         />
       </div>
     </div>

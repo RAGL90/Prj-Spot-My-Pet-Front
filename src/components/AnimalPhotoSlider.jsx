@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BASE_URL } from "@/core/config/configDev";
+import { BASE_URL, IMAGE_BASE_URL } from "@/core/config/configDev";
 import Image from "next/image";
 import { useSwipeable } from "react-swipeable";
 
@@ -19,7 +19,7 @@ function AnimalPhotoSlider({
   //No es const, dado que vamos a ir modificando esta variable imageUrl con las diferentes fotos
   let imageUrl =
     animal.photo.length > 0
-      ? `${BASE_URL}${animal._id}/${animal.photo[imageIndex]}`
+      ? `${IMAGE_BASE_URL}${animal._id}/${animal.photo[imageIndex]}`
       : //Si no tiene foto usaremos:
         "/imageComponents/ImageNotFound.svg";
 
@@ -80,6 +80,7 @@ function AnimalPhotoSlider({
                 : "border-pink-light"
             }`}
             priority={true}
+            unoptimized={true} //LINEA PARA PRODUCCION CONFLICTO CON NGINX
           />
         </div>
       </div>
