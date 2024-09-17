@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { BASE_URL } from "@/core/config/configDev";
+import { BASE_URL, IMAGE_BASE_URL } from "@/core/config/configDev";
 import Image from "next/image";
 
 function PhotoView({ animal }) {
   //Aquí es const, no se va a modificar la ruta
   const imageUrl =
     animal.photo.length > 0
-      ? `${BASE_URL}${animal._id}/${animal.photo[0]}`
+      ? `${IMAGE_BASE_URL}${animal._id}/${animal.photo[0]}`
       : // ? `${BASE_URL}${animal._id}/${animal.photo[0]}` (ASI EN EL LOCAL)
         //Si no tiene foto usaremos:
         "/imageComponents/ImageNotFound.jpg";
