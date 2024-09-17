@@ -7,7 +7,8 @@ function PhotoView({ animal }) {
   const imageUrl =
     animal.photo.length > 0
       ? `${BASE_URL}${animal._id}/${animal.photo[0]}`
-      : //Si no tiene foto usaremos:
+      : // ? `${BASE_URL}${animal._id}/${animal.photo[0]}` (ASI EN EL LOCAL)
+        //Si no tiene foto usaremos:
         "/imageComponents/ImageNotFound.jpg";
 
   //Proporcionamos un Alt automatizado, indicando el nombre del animal
