@@ -27,6 +27,7 @@ function PhotoView({ animal }) {
           alt={imageAlt}
           className="rounded-lg shadow-xl"
           priority={true}
+          unoptimized={true}
         />
       </div>
     </div>
