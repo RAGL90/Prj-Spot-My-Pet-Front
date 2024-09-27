@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     deviceSizes: [640, 768, 1024, 1280, 1600],
     imageSizes: [16, 32, 48, 64, 96],
-    domains: ["spotmypet.es", "www.spotmypet.es"],
+    // domains: ["spotmypet.es", "www.spotmypet.es"],
     path: "/public/animals/",
     loader: "default",
     remotePatterns: [
